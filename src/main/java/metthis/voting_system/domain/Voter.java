@@ -7,4 +7,12 @@ public class Voter extends Person {
         super(name, ID, dateOfBirth, isCitizen);
         this.voted = false;
     }
+
+    public boolean getVoted() {
+        return this.voted;
+    }
+
+    public void voted() {
+        this.voted = true;
+    }
 }
