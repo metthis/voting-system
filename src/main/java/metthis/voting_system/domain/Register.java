@@ -15,11 +15,11 @@ public abstract class Register<P extends Person> {
         return this.register.putIfAbsent(person.getID(), person);
     }
 
-    public P replace(P person) {
+    public P update(P person) {
         return this.register.replace(person.getID(), person);
     }
 
-    public P addOrReplace(P person) {
+    public P addOrUpdate(P person) {
         return this.register.put(person.getID(), person);
     }
 
