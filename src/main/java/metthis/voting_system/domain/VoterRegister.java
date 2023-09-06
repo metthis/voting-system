@@ -1,7 +1,5 @@
 package metthis.voting_system.domain;
 
-import java.util.Map;
-
 public class VoterRegister extends Register<Voter> {
     public VoterRegister() {
         super();
