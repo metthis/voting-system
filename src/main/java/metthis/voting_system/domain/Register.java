@@ -27,6 +27,10 @@ public abstract class Register<P extends Person> {
         return this.register.remove(person.getID());
     }
 
+    public void clear() {
+        this.register.clear();
+    }
+
     public abstract boolean isEligible(P person);
 
     public Map<String, P> getRegister() {
