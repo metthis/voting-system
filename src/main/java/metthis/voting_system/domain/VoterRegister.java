@@ -9,7 +9,8 @@ public class VoterRegister extends Register<Voter> {
 
     @Override
     public boolean isEligible(Voter voter) {
-        return this.votingRound.isEligibleVoter(voter);
+        return false; // Placeholder until I can implement the line below.
+        // return this.votingRound.isEligibleVoter(voter);
     }
 
     public int howManyVoted() {

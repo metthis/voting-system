@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public abstract class Register<P extends Person> {
     protected Map<String, P> register;
-    protected VotingRound votingRound;
+    // protected VotingRound votingRound;
 
     public Register() {
         this.register = new HashMap<>();
