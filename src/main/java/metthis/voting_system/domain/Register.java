@@ -11,19 +11,19 @@ public abstract class Register<P extends Person> {
         this.register = new HashMap<>();
     }
 
-    public Person addIfAbsent(P person) {
+    public P addIfAbsent(P person) {
         return this.register.putIfAbsent(person.getID(), person);
     }
 
-    public Person replace(P person) {
+    public P replace(P person) {
         return this.register.replace(person.getID(), person);
     }
 
-    public Person addOrReplace(P person) {
+    public P addOrReplace(P person) {
         return this.register.put(person.getID(), person);
     }
 
-    public Person remove(P person) {
+    public P remove(P person) {
         return this.register.remove(person.getID());
     }
 
