@@ -3,17 +3,17 @@ package metthis.voting_system.domain;
 import java.time.LocalDate;
 
 public class Candidate extends Person {
-    private LocalDate applicationDate;
+    private LocalDate registrationDate;
     private LocalDate withdrawalDate;
 
-    public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String applicationDate) {
+    public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String registrationDate) {
         super(name, ID, dateOfBirth, isCitizen);
-        this.applicationDate = LocalDate.parse(applicationDate);
+        this.registrationDate = LocalDate.parse(registrationDate);
         this.withdrawalDate = null;
     }
 
     public LocalDate getAplicationDate() {
-        return this.applicationDate;
+        return this.registrationDate;
     }
 
     public LocalDate getWithdrawalDate() {
