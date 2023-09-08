@@ -1,6 +1,7 @@
 package metthis.voting_system.domain;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public abstract class Person {
     private String name;
@@ -29,5 +30,13 @@ public abstract class Person {
 
     public boolean getIsCitizen() {
         return this.isCitizen;
+    }
+
+    /*
+     * Returns the time difference rounded down to whole years.
+     * Eg. 17 years and 364 days is represented as 17 years.
+     */
+    public int getAge(LocalDate onDate) {
+        return (int) this.dateOfBirth.until(onDate, ChronoUnit.YEARS);
     }
 }
