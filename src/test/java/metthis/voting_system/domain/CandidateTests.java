@@ -13,7 +13,7 @@ public class CandidateTests {
 
     @BeforeEach
     void initEach() {
-        this.candidate = new Candidate("Jane Doe", "12345678", "1995-11-27", true, "2023-03-15");
+        this.candidate = new Candidate("Jane Doe", "12345678", "1995-05-03", true, "2023-03-15");
     }
 
     @Test
@@ -28,7 +28,7 @@ public class CandidateTests {
 
     @Test
     void getDateOfBirthIsInLocalDateFormat() {
-        LocalDate expected = LocalDate.of(1995, 11, 27);
+        LocalDate expected = LocalDate.of(1995, 05, 03);
         assertEquals(expected, this.candidate.getDateOfBirth());
     }
 
@@ -36,6 +36,23 @@ public class CandidateTests {
     void canGetIsCitizen() {
         assertEquals(true, this.candidate.getIsCitizen());
     }
+
+    @Test // Should be parametrised
+    void getAgeReturnsCorrectAge() {
+        LocalDate date1 = LocalDate.of(2013, 05, 02);
+        LocalDate date2 = LocalDate.of(2013, 05, 03);
+        LocalDate date3 = LocalDate.of(2013, 05, 04);
+
+        int age1 = this.candidate.getAge(date1);
+        int age2 = this.candidate.getAge(date2);
+        int age3 = this.candidate.getAge(date3);
+
+        assertEquals(17, age1);
+        assertEquals(18, age2);
+        assertEquals(18, age3);
+    }
+
+    // The following are tests of methods specific to Candidate:
 
     @Test
     void getApplicationDateIsInLocalDateFormat() {
