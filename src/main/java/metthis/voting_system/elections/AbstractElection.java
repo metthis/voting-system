@@ -1,8 +1,8 @@
 package metthis.voting_system.elections;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import metthis.voting_system.persons.CandidateRegister;
 import metthis.voting_system.persons.VoterRegister;
@@ -20,12 +20,12 @@ public abstract class AbstractElection {
     protected final LocalDate ELECTION_DATE;
     protected VoterRegister voters;
     protected CandidateRegister candidates;
-    protected List<VotingRound> rounds;
+    protected List<VotingRound> votingRounds;
 
     public AbstractElection(String electionDate) {
         this.ELECTION_DATE = LocalDate.parse(electionDate);
         this.voters = new VoterRegister();
         this.candidates = new CandidateRegister();
-        this.rounds = new ArrayList<>(4);
+        this.votingRounds = new ArrayList<>(4);
     }
 }
