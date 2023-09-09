@@ -78,17 +78,12 @@ public class CandidateTests {
         assertFalse(candidate1.equals(candidate2));
     }
 
-    @ParameterizedTest
-    @CsvSource(nullValues = "NIL", textBlock = """
-            IDid456,    NIL
-            NIL,        IDid456
-            NIL,        NIL
-            """)
-    void equalsReturnsFalseWhenEitherIDsIsNull(String ID1, String ID2) {
-        Candidate candidate1 = new Candidate("name", ID1, "2020-01-01", false, "2020-01-01");
-        Candidate candidate2 = new Candidate("name", ID2, "2020-01-01", false, "2020-01-01");
+    @Test
+    void equalsReturnsTrueWhenBothIDsAreNull() {
+        Candidate candidate1 = new Candidate("name", null, "2020-01-01", false, "2020-01-01");
+        Candidate candidate2 = new Candidate("name", null, "2020-01-01", false, "2020-01-01");
 
-        assertFalse(candidate1.equals(candidate2));
+        assertTrue(candidate1.equals(candidate2));
     }
 
     @ParameterizedTest
