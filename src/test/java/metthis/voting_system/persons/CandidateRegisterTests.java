@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 
@@ -236,11 +237,10 @@ public class CandidateRegisterTests {
 
     }
 
-    @Test
-    void getRegisterReturnsRegisterOfTheSameSizeAsInThePrivateVariable() {
-        int EXPECTED_SIZE = 10;
-
-        for (int i = 0; i < EXPECTED_SIZE; i++) {
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 4, 10, 25, 200, 3000 })
+    void getRegisterReturnsRegisterOfTheSameSizeAsInThePrivateVariable(int size) {
+        for (int i = 0; i < size; i++) {
             Candidate candidate = new Candidate("name", String.valueOf(i), "2000-01-01", true, "2023-01-01");
             this.candidateRegister.addIfAbsent(candidate);
         }
@@ -249,21 +249,20 @@ public class CandidateRegisterTests {
         Map<String, Candidate> register = this.candidateRegister.getRegister();
         int returnedSize = register.size();
 
-        assertEquals(EXPECTED_SIZE, internalSize, returnedSize);
+        assertEquals(size, internalSize, returnedSize);
     }
 
-    @Test
-    void howManyRegisteredReturnsCorrectNumberAfterAdditions() {
-        int EXPECTED_SIZE = 10;
-
-        for (int i = 0; i < EXPECTED_SIZE; i++) {
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 4, 10, 25, 200, 3000 })
+    void howManyRegisteredReturnsCorrectNumberAfterAdditions(int size) {
+        for (int i = 0; i < size; i++) {
             Candidate candidate = new Candidate("name", String.valueOf(i), "2000-01-01", true, "2023-01-01");
             this.candidateRegister.addIfAbsent(candidate);
         }
 
         int returned = this.candidateRegister.howManyRegistered();
 
-        assertEquals(EXPECTED_SIZE, returned);
+        assertEquals(size, returned);
     }
 
     @Disabled("Disabled until isEligible() is implemented.")

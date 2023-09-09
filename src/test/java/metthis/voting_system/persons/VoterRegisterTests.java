@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 
@@ -236,11 +237,10 @@ public class VoterRegisterTests {
 
     }
 
-    @Test
-    void getRegisterReturnsRegisterOfTheSameSizeAsInThePrivateVariable() {
-        int EXPECTED_SIZE = 10;
-
-        for (int i = 0; i < EXPECTED_SIZE; i++) {
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 4, 10, 25, 200, 3000 })
+    void getRegisterReturnsRegisterOfTheSameSizeAsInThePrivateVariable(int size) {
+        for (int i = 0; i < size; i++) {
             Voter voter = new Voter("name", String.valueOf(i), "2000-01-01", true);
             this.voterRegister.addIfAbsent(voter);
         }
@@ -249,21 +249,20 @@ public class VoterRegisterTests {
         Map<String, Voter> register = this.voterRegister.getRegister();
         int returnedSize = register.size();
 
-        assertEquals(EXPECTED_SIZE, internalSize, returnedSize);
+        assertEquals(size, internalSize, returnedSize);
     }
 
-    @Test
-    void howManyRegisteredReturnsCorrectNumberAfterAdditions() {
-        int EXPECTED_SIZE = 10;
-
-        for (int i = 0; i < EXPECTED_SIZE; i++) {
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 4, 10, 25, 200, 3000 })
+    void howManyRegisteredReturnsCorrectNumberAfterAdditions(int size) {
+        for (int i = 0; i < size; i++) {
             Voter voter = new Voter("name", String.valueOf(i), "2000-01-01", true);
             this.voterRegister.addIfAbsent(voter);
         }
 
         int returned = this.voterRegister.howManyRegistered();
 
-        assertEquals(EXPECTED_SIZE, returned);
+        assertEquals(size, returned);
     }
 
     @Disabled("Disabled until isEligible() is implemented.")
