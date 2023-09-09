@@ -1,8 +1,11 @@
 package metthis.voting_system.persons;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
@@ -49,6 +52,81 @@ public class CandidateTests {
         int age = this.candidate.getAge(date);
 
         assertEquals(expectedAge, age);
+    }
+
+    @Test
+    void equalsReturnsTrueWhenAllFieldsAreSame() {
+        Candidate candidate1 = new Candidate("name", "IDid456", "2020-01-01", false, "2020-01-01");
+        Candidate candidate2 = new Candidate("name", "IDid456", "2020-01-01", false, "2020-01-01");
+
+        assertTrue(candidate1.equals(candidate2));
+    }
+
+    @Test
+    void equalsReturnsTrueWhenOnlyIDsAreSame() {
+        Candidate candidate1 = new Candidate("name1", "IDid456", "2020-01-01", false, "2021-01-01");
+        Candidate candidate2 = new Candidate("name1", "IDid456", "1920-12-31", true, "1921-12-31");
+
+        assertTrue(candidate1.equals(candidate2));
+    }
+
+    @Test
+    void equalsReturnsFalseWhenIDsAreDifferent() {
+        Candidate candidate1 = new Candidate("name", "IDid456", "2020-01-01", false, "2020-01-01");
+        Candidate candidate2 = new Candidate("name", "foobar", "2020-01-01", false, "2020-01-01");
+
+        assertFalse(candidate1.equals(candidate2));
+    }
+
+    @ParameterizedTest
+    @CsvSource(nullValues = "NIL", textBlock = """
+            IDid456,    NIL
+            NIL,        IDid456
+            NIL,        NIL
+            """)
+    void equalsReturnsFalseWhenEitherIDsIsNull(String ID1, String ID2) {
+        Candidate candidate1 = new Candidate("name", ID1, "2020-01-01", false, "2020-01-01");
+        Candidate candidate2 = new Candidate("name", ID2, "2020-01-01", false, "2020-01-01");
+
+        assertFalse(candidate1.equals(candidate2));
+    }
+
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+            1,  2,  -1.0
+            2,  1,  1.0
+            1,  1,  0
+            """)
+    void compareToReturnsCorrectlySignedInt(String ID1, String ID2, double expected) {
+        Candidate candidate1 = new Candidate("", ID1, "2000-01-01", false, "2020-01-01");
+        Candidate candidate2 = new Candidate("", ID2, "2000-01-01", false, "2020-01-01");
+
+        double actual = Math.signum((double) candidate1.compareTo(candidate2));
+
+        assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+            1,      1
+            1,      2
+            1,      a
+            a,      b
+            B,      a
+            a,      aa
+            """)
+    void sortingWorksCorrectly(String smallerID, String largerID) {
+        Candidate smallerCandidate = new Candidate("", smallerID, "2000-01-01", false, "2020-01-01");
+        Candidate largerCandidate = new Candidate("", largerID, "2000-01-01", false, "2020-01-01");
+
+        Candidate[] resultedOrder = { smallerCandidate, largerCandidate };
+        Arrays.sort(resultedOrder);
+
+        Candidate[] resultedOrderInputsFlipped = { largerCandidate, smallerCandidate };
+        Arrays.sort(resultedOrderInputsFlipped);
+
+        assertEquals(smallerID, resultedOrder[0].getID(), resultedOrderInputsFlipped[0].getID());
+        assertEquals(largerID, resultedOrder[1].getID(), resultedOrderInputsFlipped[1].getID());
     }
 
     // The following are tests of methods specific to Candidate:

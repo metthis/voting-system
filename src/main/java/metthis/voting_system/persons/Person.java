@@ -3,7 +3,7 @@ package metthis.voting_system.persons;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public abstract class Person {
+public abstract class Person implements Comparable<Person> {
     private String name;
     private String ID;
     private LocalDate dateOfBirth;
@@ -38,5 +38,26 @@ public abstract class Person {
      */
     public int getAge(LocalDate onDate) {
         return (int) this.dateOfBirth.until(onDate, ChronoUnit.YEARS);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Person other = (Person) obj;
+        if (ID == null || other.ID == null) {
+            return false;
+        } else if (!ID.equals(other.ID))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.ID.compareTo(other.ID);
     }
 }
