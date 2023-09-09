@@ -1,17 +1,17 @@
 package metthis.voting_system.persons;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 
 public class VoterRegisterTests {
     private VoterRegister voterRegister;
@@ -229,12 +229,6 @@ public class VoterRegisterTests {
         this.voterRegister.clear();
 
         assertTrue(this.voterRegister.howManyRegistered() == 0);
-    }
-
-    @Disabled("Disabled until isEligible() is implemented.")
-    @Test
-    void isEligible_works_WIP() {
-
     }
 
     @ParameterizedTest

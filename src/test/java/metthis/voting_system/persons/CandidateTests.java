@@ -1,17 +1,18 @@
 package metthis.voting_system.persons;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.api.BeforeEach;
 
 public class CandidateTests {
     private Candidate candidate;
@@ -52,6 +53,12 @@ public class CandidateTests {
         int age = this.candidate.getAge(date);
 
         assertEquals(expectedAge, age);
+    }
+
+    @Disabled("Disabled until Election.isEligible methods get their tests")
+    @Test
+    void isEligible() {
+
     }
 
     @Test

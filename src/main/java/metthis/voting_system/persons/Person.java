@@ -3,6 +3,8 @@ package metthis.voting_system.persons;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import metthis.voting_system.elections.Election;
+
 public abstract class Person implements Comparable<Person> {
     private String name;
     private String ID;
@@ -39,6 +41,8 @@ public abstract class Person implements Comparable<Person> {
     public int getAge(LocalDate onDate) {
         return (int) this.dateOfBirth.until(onDate, ChronoUnit.YEARS);
     }
+
+    public abstract boolean isEligible(Election election);
 
     @Override
     public int hashCode() {
