@@ -1,4 +1,4 @@
-package metthis.voting_system.domain;
+package metthis.voting_system.persons;
 
 import java.time.LocalDate;
 
@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.BeforeEach;
 
 public class VoterTests {

@@ -1,12 +1,12 @@
-package metthis.voting_system.logic.elections;
+package metthis.voting_system.elections;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-import metthis.voting_system.domain.VoterRegister;
-import metthis.voting_system.domain.CandidateRegister;
-import metthis.voting_system.logic.voting.VotingRound;
+import metthis.voting_system.persons.CandidateRegister;
+import metthis.voting_system.persons.VoterRegister;
+import metthis.voting_system.voting.VotingRound;
 
 /*
  * Stores eligibility criteria

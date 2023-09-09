@@ -1,4 +1,4 @@
-package metthis.voting_system.domain;
+package metthis.voting_system.persons;
 
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 

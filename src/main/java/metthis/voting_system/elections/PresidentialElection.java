@@ -1,7 +1,7 @@
-package metthis.voting_system.logic.elections;
+package metthis.voting_system.elections;
 
-import metthis.voting_system.domain.Voter;
-import metthis.voting_system.domain.Candidate;
+import metthis.voting_system.persons.Candidate;
+import metthis.voting_system.persons.Voter;
 
 public class PresidentialElection extends AbstractElection implements Election {
     private final int MIN_VOTER_AGE = 18;

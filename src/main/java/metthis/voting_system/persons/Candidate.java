@@ -1,4 +1,4 @@
-package metthis.voting_system.domain;
+package metthis.voting_system.persons;
 
 import java.time.LocalDate;
 

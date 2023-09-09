@@ -1,4 +1,4 @@
-package metthis.voting_system.domain;
+package metthis.voting_system.persons;
 
 public class VoterRegister extends Register<Voter> {
     public VoterRegister() {
