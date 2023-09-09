@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -38,19 +40,16 @@ public class CandidateTests {
         assertEquals(true, this.candidate.getIsCitizen());
     }
 
-    @Test // Should be parametrised
-    void getAgeReturnsCorrectAge() {
-        LocalDate date1 = LocalDate.of(2013, 05, 02);
-        LocalDate date2 = LocalDate.of(2013, 05, 03);
-        LocalDate date3 = LocalDate.of(2013, 05, 04);
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+            2013-05-02,     17
+            2013-05-03,     18
+            2013-05-04,     18
+            """)
+    void getAgeReturnsCorrectAge(LocalDate date, int expectedAge) {
+        int age = this.candidate.getAge(date);
 
-        int age1 = this.candidate.getAge(date1);
-        int age2 = this.candidate.getAge(date2);
-        int age3 = this.candidate.getAge(date3);
-
-        assertEquals(17, age1);
-        assertEquals(18, age2);
-        assertEquals(18, age3);
+        assertEquals(expectedAge, age);
     }
 
     // The following are tests of methods specific to Candidate:
