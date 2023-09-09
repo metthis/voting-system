@@ -3,11 +3,11 @@ package metthis.voting_system.persons;
 import java.util.HashMap;
 import java.util.Map;
 
-import metthis.voting_system.voting.VotingRound;
+import metthis.voting_system.elections.Election;
 
 public abstract class Register<P extends Person> {
     protected Map<String, P> register;
-    protected VotingRound votingRound;
+    protected Election election;
 
     public Register() {
         this.register = new HashMap<>();
@@ -43,7 +43,7 @@ public abstract class Register<P extends Person> {
 
     public int howManyEligible() {
         return (int) this.register.values().stream()
-                .filter(person -> person.isEligible(this.votingRound.getElection()))
+                .filter(person -> person.isEligible(this.election))
                 .count();
     }
 }
