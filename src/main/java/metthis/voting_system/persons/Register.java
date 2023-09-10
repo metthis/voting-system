@@ -32,6 +32,11 @@ public abstract class Register<P extends Person> {
         this.register.clear();
     }
 
+    public boolean contains(P person) {
+        P containedPerson = this.register.get(person.getID());
+        return containedPerson == person;
+    }
+
     public Map<String, P> getRegister() {
         return this.register;
     }

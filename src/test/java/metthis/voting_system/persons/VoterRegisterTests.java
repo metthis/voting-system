@@ -1,6 +1,7 @@
 package metthis.voting_system.persons;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -229,6 +230,38 @@ public class VoterRegisterTests {
         this.voterRegister.clear();
 
         assertTrue(this.voterRegister.howManyRegistered() == 0);
+    }
+
+    @Test
+    void containsReturnsTrueWhenBothVotersAreTheSameObject() {
+        Voter voter = new Voter("1", "1", "2000-01-01", true);
+        this.voterRegister.addIfAbsent(voter);
+
+        boolean actual = this.voterRegister.contains(voter);
+
+        assertTrue(actual);
+    }
+
+    @Test
+    void containsReturnsFalseWhenVotersHaveTheSameStateButAreDifferentObjects() {
+        Voter containedVoter = new Voter("1", "1", "2000-01-01", true);
+        Voter checkedVoter = new Voter("1", "1", "2000-01-01", true);
+        this.voterRegister.addIfAbsent(containedVoter);
+
+        boolean actual = this.voterRegister.contains(checkedVoter);
+
+        assertFalse(actual);
+    }
+
+    @Test
+    void containsReturnsFalseWhenVotersOnlyShareID() {
+        Voter containedVoter = new Voter("1", "ID", "2000-01-01", true);
+        Voter checkedVoter = new Voter("2", "ID", "2020-12-31", false);
+        this.voterRegister.addIfAbsent(containedVoter);
+
+        boolean actual = this.voterRegister.contains(checkedVoter);
+
+        assertFalse(actual);
     }
 
     @ParameterizedTest

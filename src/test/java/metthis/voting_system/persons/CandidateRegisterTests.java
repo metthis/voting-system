@@ -1,6 +1,7 @@
 package metthis.voting_system.persons;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -231,6 +232,38 @@ public class CandidateRegisterTests {
         assertTrue(this.candidateRegister.howManyRegistered() == 0);
     }
 
+    @Test
+    void containsReturnsTrueWhenBothCandidatesAreTheSameObject() {
+        Candidate candidate = new Candidate("1", "1", "2000-01-01", true, "2000-01-01");
+        this.candidateRegister.addIfAbsent(candidate);
+
+        boolean actual = this.candidateRegister.contains(candidate);
+
+        assertTrue(actual);
+    }
+
+    @Test
+    void containsReturnsFalseWhenCandidatesHaveTheSameStateButAreDifferentObjects() {
+        Candidate containedCandidate = new Candidate("1", "1", "2000-01-01", true, "2000-01-01");
+        Candidate checkedCandidate = new Candidate("1", "1", "2000-01-01", true, "2000-01-01");
+        this.candidateRegister.addIfAbsent(containedCandidate);
+
+        boolean actual = this.candidateRegister.contains(checkedCandidate);
+
+        assertFalse(actual);
+    }
+
+    @Test
+    void containsReturnsFalseWhenCandidatesOnlyShareID() {
+        Candidate containedCandidate = new Candidate("1", "ID", "2000-01-01", true, "2000-01-01");
+        Candidate checkedCandidate = new Candidate("2", "ID", "2020-12-31", false, "2020-12-31");
+        this.candidateRegister.addIfAbsent(containedCandidate);
+
+        boolean actual = this.candidateRegister.contains(checkedCandidate);
+
+        assertFalse(actual);
+    }
+
     @ParameterizedTest
     @ValueSource(ints = { 0, 1, 2, 4, 10, 25, 200, 3000 })
     void getRegisterReturnsRegisterOfTheSameSizeAsInThePrivateVariable(int size) {
@@ -265,7 +298,7 @@ public class CandidateRegisterTests {
 
     }
 
-    // The following are tests of methods specific to VoterRegister:
+    // The following are tests of methods specific to CandidateRegister:
 
     @Test
     void howManyWithdrewReturnsCorrectNumber() {
