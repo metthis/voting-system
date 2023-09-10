@@ -13,11 +13,13 @@ public class PresidentialElection extends AbstractElection implements Election {
 
     public boolean isEligibleVoter(Voter voter) {
         return voter.getIsCitizen() &&
-                voter.getAge(this.ELECTION_DATE) >= this.MIN_VOTER_AGE;
+                voter.getAge(this.ELECTION_DATE) >= this.MIN_VOTER_AGE &&
+                this.voters.contains(voter);
     }
 
     public boolean isEligibleCandidate(Candidate candidate) {
         return candidate.getIsCitizen() &&
-                candidate.getAge(this.ELECTION_DATE) >= this.MIN_CANDIDATE_AGE;
+                candidate.getAge(this.ELECTION_DATE) >= this.MIN_CANDIDATE_AGE &&
+                this.candidates.contains(candidate);
     }
 }
