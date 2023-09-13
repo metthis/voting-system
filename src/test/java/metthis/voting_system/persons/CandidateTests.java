@@ -150,4 +150,22 @@ public class CandidateTests {
         LocalDate expected = LocalDate.of(2023, 10, 31);
         assertEquals(expected, this.candidate.getWithdrawalDate());
     }
+
+    @Test
+    void lostThisElectionIsInitiallyFalse() {
+        assertFalse(this.candidate.getLostThisElection());
+    }
+
+    @Test
+    void lostThisElectionCanBeSetToTrue() {
+        this.candidate.setLostThisElection(true);
+        assertTrue(this.candidate.getLostThisElection());
+    }
+
+    @Test
+    void lostThisElectionCanBeSetBackToFalse() {
+        this.candidate.setLostThisElection(true);
+        this.candidate.setLostThisElection(false);
+        assertFalse(this.candidate.getLostThisElection());
+    }
 }
