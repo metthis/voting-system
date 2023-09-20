@@ -28,4 +28,8 @@ public abstract class AbstractElection {
         this.candidates = new CandidateRegister();
         this.votingRounds = new ArrayList<>(4);
     }
+
+    public VoterRegister getVoters() {
+        return this.voters;
+    }
 }
