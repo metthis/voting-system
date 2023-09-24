@@ -32,4 +32,8 @@ public abstract class AbstractElection {
     public VoterRegister getVoters() {
         return this.voters;
     }
+
+    public CandidateRegister getCandidates() {
+        return this.candidates;
+    }
 }
