@@ -1,7 +1,7 @@
 package metthis.voting_system.voting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -69,28 +69,22 @@ public class VotingRoundTests {
         }
 
         @Test
-        void canCollectVotesFromBallotBoxes() {
-            votingRound.collectVotesFromBallotBoxes();
-        }
-
-        @Test
         void canGetVotes() {
             votingRound.getVotes();
         }
 
         @Test
-        void getVotesInitiallyReturnsNull() {
-            assertNull(votingRound.getVotes());
+        void getVotesInitiallyReturnsEmptyMap() {
+            assertTrue(votingRound.getVotes().isEmpty());
         }
 
         @ParameterizedTest
         @MethodSource
-        @DisplayName("Votes from ballot boxes get correctly collected by collectVotesFromBallotBoxes() and returned by getVotes()")
+        @DisplayName("Votes from ballot boxes get correctly returned by getVotes()")
         void votesGetCorrectlyCollectedAndReturned(
                 List<BallotBox> ballotBoxes,
                 Map<Vote, Integer> expectedVotes) {
             votingRound.setBallotBoxes(ballotBoxes);
-            votingRound.collectVotesFromBallotBoxes();
             assertEquals(expectedVotes, votingRound.getVotes());
         }
 

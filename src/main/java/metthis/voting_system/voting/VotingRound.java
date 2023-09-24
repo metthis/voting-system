@@ -6,11 +6,9 @@ import java.util.Map;
 
 public class VotingRound {
     private List<BallotBox> ballotBoxes;
-    private Map<Vote, Integer> votes;
 
     public VotingRound() {
         this.ballotBoxes = new ArrayList<>();
-        this.votes = null;
     }
 
     public BallotBox createBallotBox() {
@@ -28,15 +26,11 @@ public class VotingRound {
         this.ballotBoxes = ballotBoxes;
     }
 
-    public void collectVotesFromBallotBoxes() {
+    public Map<Vote, Integer> getVotes() {
         BallotBox allVotes = new BallotBox();
         for (BallotBox ballotBox : this.ballotBoxes) {
             ballotBox.dumpIntoAndKeep(allVotes);
         }
-        this.votes = allVotes.getVotes();
-    }
-
-    public Map<Vote, Integer> getVotes() {
-        return this.votes;
+        return allVotes.getVotes();
     }
 }
