@@ -3,7 +3,7 @@ package metthis.voting_system.elections;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.Voter;
 
-public class PresidentialElection extends AbstractElection implements Election {
+public class PresidentialElection extends AbstractElection {
     private final int MIN_VOTER_AGE = 18;
     private final int MIN_CANDIDATE_AGE = 40;
 

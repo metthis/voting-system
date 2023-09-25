@@ -16,7 +16,7 @@ import metthis.voting_system.voting.VotingRound;
  *  - Saves the result when the election is over
  */
 
-public abstract class AbstractElection {
+public abstract class AbstractElection implements Election {
     protected final LocalDate ELECTION_DATE;
     protected VoterRegister voters;
     protected CandidateRegister candidates;
