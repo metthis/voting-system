@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRegister;
 import metthis.voting_system.persons.VoterRegister;
+import metthis.voting_system.voting.Vote;
 import metthis.voting_system.voting.VotingRound;
 
 /*
@@ -35,5 +37,10 @@ public abstract class AbstractElection implements Election {
 
     public CandidateRegister getCandidates() {
         return this.candidates;
+    }
+
+    public boolean voteIsValid(Vote vote) {
+        Candidate choice = vote.getChoice();
+        return choice != null && choice.isEligible(this);
     }
 }
