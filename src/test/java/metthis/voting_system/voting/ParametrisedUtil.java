@@ -1,6 +1,7 @@
 package metthis.voting_system.voting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import metthis.voting_system.persons.Candidate;
 
 public class ParametrisedUtil {
-    static Candidate[] getDifferenCandidates(int count) {
+    public static Candidate[] getDifferenCandidates(int count) {
         Candidate[] candidates = new Candidate[count];
         for (int i = 0; i < count; i++) {
             String iString = String.valueOf(i);
@@ -20,7 +21,7 @@ public class ParametrisedUtil {
         return candidates;
     }
 
-    static List<List<BallotBox>> getBallotBoxGroupsFromBlueprints(
+    public static List<List<BallotBox>> getBallotBoxGroupsFromBlueprints(
             List<List<Integer>> blueprints,
             Candidate[] candidates) {
         List<List<BallotBox>> ballotBoxGroups = new ArrayList<>();
@@ -41,7 +42,7 @@ public class ParametrisedUtil {
         return ballotBoxGroups;
     }
 
-    static List<Map<Vote, Integer>> getVotesListFromBlueprints(
+    public static List<Map<Vote, Integer>> getVotesListFromBlueprints(
             List<Map<Integer, Integer>> blueprints,
             Candidate[] candidates) {
         List<Map<Vote, Integer>> expectedVotesList = new ArrayList<>();
@@ -57,7 +58,7 @@ public class ParametrisedUtil {
         return expectedVotesList;
     }
 
-    static List<BallotBox> getBallotBoxListFromVotesList(
+    public static List<BallotBox> getBallotBoxListFromVotesList(
             List<Map<Vote, Integer>> votesList) {
         List<BallotBox> ballotBoxList = new ArrayList<>();
         for (Map<Vote, Integer> votes : votesList) {
@@ -70,7 +71,7 @@ public class ParametrisedUtil {
         return ballotBoxList;
     }
 
-    static List<BallotBox> getBallotBoxesFromBlueprints(
+    public static List<BallotBox> getBallotBoxesFromBlueprints(
             List<Map<Integer, Integer>> blueprints,
             Candidate[] candidates) {
         List<Map<Vote, Integer>> votesList = getVotesListFromBlueprints(
@@ -78,7 +79,44 @@ public class ParametrisedUtil {
         return getBallotBoxListFromVotesList(votesList);
     }
 
-    static Stream<Arguments> multipleListsToStreamOfArguments(List<?>... lists) {
+    public static List<VotingRound> getVotingRoundsFromBallotBoxes(
+            List<BallotBox> ballotBoxes) {
+        List<VotingRound> rounds = new ArrayList<>();
+        for (BallotBox ballotBox : ballotBoxes) {
+            VotingRound round = new VotingRound();
+            round.setBallotBoxes(Arrays.asList(ballotBox));
+            rounds.add(round);
+        }
+        return rounds;
+    }
+
+    public static List<VotingRound> getVotingRoundsFromBlueprints(
+            List<Map<Integer, Integer>> blueprints,
+            Candidate[] candidates) {
+        List<BallotBox> ballotBoxes = getBallotBoxesFromBlueprints(blueprints, candidates);
+        return getVotingRoundsFromBallotBoxes(ballotBoxes);
+    }
+
+    public static List<Candidate[][]> getWinnersListFromBlueprints(
+            List<List<List<Integer>>> blueprints,
+            Candidate[] candidates) {
+        List<Candidate[][]> winnersList = new ArrayList<>();
+        for (List<List<Integer>> blueprint : blueprints) {
+            List<Candidate[]> winners = new ArrayList<>();
+            for (List<Integer> group : blueprint) {
+                Candidate[] tiedWinners = new Candidate[group.size()];
+                for (int i = 0; i < group.size(); i++) {
+                    Candidate winner = candidates[group.get(i)];
+                    tiedWinners[i] = winner;
+                }
+                winners.add(tiedWinners);
+            }
+            winnersList.add(winners.toArray(Candidate[][]::new));
+        }
+        return winnersList;
+    }
+
+    public static Stream<Arguments> multipleListsToStreamOfArguments(List<?>... lists) {
         int listSize = lists[0].size();
         for (List<?> list : lists) {
             if (list.size() != listSize) {
