@@ -11,6 +11,10 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import metthis.voting_system.persons.Candidate;
 
+// This class is also used by tests in the logic package.
+// The class should thus be split depending on its methods' usage
+// and put into appropriate packages.
+
 public class ParametrisedUtil {
     public static Candidate[] getDifferenCandidates(int count) {
         Candidate[] candidates = new Candidate[count];
