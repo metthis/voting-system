@@ -21,6 +21,7 @@ public class PresidentialElection extends AbstractElection {
         return candidate.getIsCitizen() &&
                 candidate.getAge(this.ELECTION_DATE) >= this.MIN_CANDIDATE_AGE &&
                 this.candidates.contains(candidate) &&
+                candidate.getWithdrawalDate() == null &&
                 candidate.getLostThisElection() == false;
     }
 }
