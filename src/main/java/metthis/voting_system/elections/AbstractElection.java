@@ -39,6 +39,6 @@ public abstract class AbstractElection implements Election {
 
     public boolean voteIsValid(Vote vote) {
         Candidate choice = vote.getChoice();
-        return choice != null && choice.isEligible(this);
+        return choice != null && isEligibleCandidate(choice);
     }
 }

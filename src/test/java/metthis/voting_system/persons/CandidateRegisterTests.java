@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -290,12 +289,6 @@ public class CandidateRegisterTests {
         int returned = this.candidateRegister.howManyRegistered();
 
         assertEquals(size, returned);
-    }
-
-    @Disabled("Disabled until isEligible() is implemented.")
-    @Test
-    void howManyEligible_works_WIP() {
-
     }
 
     // The following are tests of methods specific to CandidateRegister:

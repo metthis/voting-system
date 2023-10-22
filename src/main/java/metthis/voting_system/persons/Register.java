@@ -45,9 +45,5 @@ public abstract class Register<P extends Person> {
         return this.register.size();
     }
 
-    public int howManyEligible(Election election) {
-        return (int) this.register.values().stream()
-                .filter(person -> person.isEligible(election))
-                .count();
-    }
+    public abstract int howManyEligible(Election election);
 }

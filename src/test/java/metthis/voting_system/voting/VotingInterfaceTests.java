@@ -52,7 +52,7 @@ public class VotingInterfaceTests {
             @BeforeEach
             void makeAndCheckVoterEligible() {
                 election.getVoters().addOrUpdate(defaultVoter);
-                assertTrue(defaultVoter.isEligible(election), "Voter isn't eligible");
+                assertTrue(election.isEligibleVoter(defaultVoter), "Voter isn't eligible");
             }
 
             @Nested
@@ -124,7 +124,7 @@ public class VotingInterfaceTests {
             void initIneligibleVoterAndTheirVotingInterface() {
                 this.ineligibleVoter = new Voter("name", "ID", "2022-01-01", false);
 
-                assertFalse(this.ineligibleVoter.isEligible(election));
+                assertFalse(election.isEligibleVoter(this.ineligibleVoter));
                 assertFalse(this.ineligibleVoter.getVoted());
 
                 this.votingInterface = new VotingInterface(ballotBox, ineligibleVoter);

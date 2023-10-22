@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -52,12 +51,6 @@ public class VoterTests {
         int age = this.voter.getAge(date);
 
         assertEquals(expectedAge, age);
-    }
-
-    @Disabled("Disabled until Election.isEligible methods get their tests")
-    @Test
-    void isEligible() {
-
     }
 
     @Test

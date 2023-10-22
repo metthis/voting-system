@@ -2,8 +2,6 @@ package metthis.voting_system.persons;
 
 import java.time.LocalDate;
 
-import metthis.voting_system.elections.Election;
-
 public class Candidate extends Person {
     private LocalDate registrationDate;
     private LocalDate withdrawalDate;
@@ -14,11 +12,6 @@ public class Candidate extends Person {
         this.registrationDate = LocalDate.parse(registrationDate);
         this.withdrawalDate = null;
         this.lostThisElection = false;
-    }
-
-    @Override
-    public boolean isEligible(Election election) {
-        return election.isEligibleCandidate(this);
     }
 
     public LocalDate getAplicationDate() {

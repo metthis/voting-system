@@ -14,7 +14,7 @@ public class VotingInterface {
 
     // Can I avoid passing Election as a parameter?
     public boolean submitVote(Vote vote, Election election) {
-        if (!this.voter.isEligible(election) || this.voter.getVoted()) {
+        if (!election.isEligibleVoter(this.voter) || this.voter.getVoted()) {
             return false;
         }
         this.ballotBox.add(vote);
