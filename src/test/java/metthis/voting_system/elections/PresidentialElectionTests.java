@@ -3,9 +3,11 @@ package metthis.voting_system.elections;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +19,7 @@ import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.Voter;
 import metthis.voting_system.voting.SingleCandidateSingleChoiceVote;
 import metthis.voting_system.voting.Vote;
+import metthis.voting_system.voting.VotingRound;
 
 public class PresidentialElectionTests {
     private String ELECTION_DATE;
@@ -183,6 +186,52 @@ public class PresidentialElectionTests {
                 assertNull(candidate.getWithdrawalDate());
 
                 assertFalse(election.isEligibleCandidate(candidate));
+            }
+        }
+
+        @Nested
+        class VotingRounds {
+            @Test
+            void canGetVotingRounds() {
+                election.getVotingRounds();
+            }
+
+            @Test
+            void getVotingRoundInitiallyReturnsEmptyCollection() {
+                assertEquals(0, election.getVotingRounds().size());
+            }
+
+            @Test
+            void canNewVotingRound() {
+                election.newVotingRound();
+            }
+
+            @Test
+            void newVotingRoundIncreasesSizeOfGetVotingRoundsTo1() {
+                election.newVotingRound();
+                assertEquals(1, election.getVotingRounds().size());
+            }
+
+            @Test
+            void newVotingRoundTimes100IncreasesSizeOfGetVotingRoundsTo100() {
+                for (int i = 0; i < 100; i++) {
+                    election.newVotingRound();
+                }
+
+                assertEquals(100, election.getVotingRounds().size());
+            }
+
+            @ParameterizedTest
+            @ValueSource(ints = { 0, 1, 2, 5, 10, 25, 100 })
+            void newVotingRoundReturnsLastItemFromGetVotingRounds(int roundsAlreadyPresent) {
+                for (int i = 0; i < roundsAlreadyPresent; i++) {
+                    election.newVotingRound();
+                }
+
+                List<VotingRound> allRounds = election.getVotingRounds();
+                VotingRound newRound = election.newVotingRound();
+
+                assertSame(allRounds.get(allRounds.size() - 1), newRound);
             }
         }
 

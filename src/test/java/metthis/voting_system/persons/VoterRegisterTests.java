@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
@@ -294,19 +295,39 @@ public class VoterRegisterTests {
     // The following are tests of methods specific to VoterRegister:
 
     @Test
-    void howManyVotedReturnsCorrectNumber() {
+    void howManyVotedThrowsExceptionWhenSomeoneAlreadyVotedInFollowingRound() {
+        int EXAMINED_VOTING_ROUND = 3;
+
+        Voter firstVoter = new Voter("1", "1", "2000-01-01", true);
+        Voter secondVoter = new Voter("2", "2", "2020-12-12", true);
+        this.voterRegister.addIfAbsent(firstVoter);
+        this.voterRegister.addIfAbsent(secondVoter);
+        firstVoter.setLastVotedRound(EXAMINED_VOTING_ROUND);
+        secondVoter.setLastVotedRound(EXAMINED_VOTING_ROUND + 1);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.voterRegister.howManyVoted(EXAMINED_VOTING_ROUND);
+        });
+    }
+
+    @Test
+    void howManyVotedReturnsCorrectNumberWhenNooneVotedInFollowingRound() {
+        int EXAMINED_VOTING_ROUND = 3;
         int EXPECTED_NUMBER_OF_ACTIVE_VOTERS = 2;
 
         Voter firstVoter = new Voter("1", "1", "2000-01-01", true);
         Voter secondVoter = new Voter("2", "2", "2020-12-12", true);
-        Voter thirdVoter = new Voter("3", "3", "2022-12-12", true);
+        Voter thirdVoter = new Voter("3", "3", "2021-01-01", true);
+        Voter fourthVoter = new Voter("4", "4", "2021-12-12", true);
         this.voterRegister.addIfAbsent(firstVoter);
         this.voterRegister.addIfAbsent(secondVoter);
         this.voterRegister.addIfAbsent(thirdVoter);
-        firstVoter.voted();
-        secondVoter.voted();
+        this.voterRegister.addIfAbsent(fourthVoter);
+        firstVoter.setLastVotedRound(3);
+        secondVoter.setLastVotedRound(3);
+        thirdVoter.setLastVotedRound(1);
 
-        int activeVoters = this.voterRegister.howManyVoted();
+        int activeVoters = this.voterRegister.howManyVoted(EXAMINED_VOTING_ROUND);
 
         assertEquals(EXPECTED_NUMBER_OF_ACTIVE_VOTERS, activeVoters);
     }

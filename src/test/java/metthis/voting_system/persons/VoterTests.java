@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class VoterTests {
     private Voter voter;
@@ -126,14 +127,21 @@ public class VoterTests {
     // The following are tests of methods specific to Voter:
 
     @Test
-    void votedIsInitiallyFalse() {
-        assertFalse(this.voter.getVoted());
+    void getLastVotedRoundInitiallyReturns0() {
+        assertEquals(0, this.voter.getLastVotedRound());
     }
 
     @Test
-    void votedVariableSetToTrueByVotedMethod() {
-        this.voter.voted();
-        assertTrue(this.voter.getVoted());
+    void canSetLastVotedRound() {
+        this.voter.setLastVotedRound(1);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { -10, -1, 0, 1, 2, 3, 4, 5, 10, 20, 137, 12345 })
+    void getLastVotedRoundReturnsValueToWhichItWasSet(int value) {
+        this.voter.setLastVotedRound(value);
+        int actual = this.voter.getLastVotedRound();
+        assertEquals(value, actual);
     }
 
 }

@@ -14,18 +14,23 @@ import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.Voter;
 
 public class VotingInterfaceTests {
-    private BallotBox ballotBox;
     private Voter defaultVoter;
 
     @BeforeEach
-    void initBallotBoxAndVoter() {
-        this.ballotBox = new BallotBox();
+    void initVoter() {
         this.defaultVoter = new Voter(
                 "name", "ID", "1960-01-01", true);
     }
 
     @Nested
     class New {
+        private BallotBox ballotBox;
+
+        @BeforeEach
+        void initVoter() {
+            this.ballotBox = new BallotBox();
+        }
+
         @Test
         void isInstantiatedWithNew() {
             new VotingInterface(ballotBox, defaultVoter);
@@ -34,14 +39,18 @@ public class VotingInterfaceTests {
 
     @Nested
     class WhenNew {
-        private VotingInterface votingInterface;
         private Election election;
+        private VotingRound round;
+        private BallotBox ballotBox;
+        private VotingInterface votingInterface;
         private Vote vote;
 
         @BeforeEach
-        void initVotingInterfaceElectionAndVote() {
-            this.votingInterface = new VotingInterface(ballotBox, defaultVoter);
+        void initVotingInterfaceElectionVotingRoundBallotBoxAndVote() {
             this.election = new PresidentialElection("2020-01-01");
+            this.round = election.newVotingRound();
+            this.ballotBox = round.createBallotBox();
+            this.votingInterface = new VotingInterface(ballotBox, defaultVoter);
 
             Candidate candidate = new Candidate("name", "ID", "1960-01-01", true, "2020-01-01");
             this.vote = new SingleCandidateSingleChoiceVote(candidate);
@@ -56,14 +65,14 @@ public class VotingInterfaceTests {
             }
 
             @Nested
-            class HasNotYetVoted {
+            class HasNotYetVotedInRound1 {
                 @BeforeEach
-                void checkHasNotYetVoted() {
-                    assertFalse(defaultVoter.getVoted(), "Voter already voted");
+                void checkHasNotYetVotedInRound1() {
+                    assertEquals(0, defaultVoter.getLastVotedRound(), "Voter already voted");
                 }
 
                 @Test
-                void submitVoteReturnsTrueWhenVoterEligibleAndHasntVotedYet() {
+                void submitVoteReturnsTrueWhenVoterEligibleAndHasntVotedYetInRound1() {
                     assertTrue(votingInterface.submitVote(vote, election));
                 }
 
@@ -76,40 +85,40 @@ public class VotingInterfaceTests {
                 }
 
                 @Test
-                void fullyEligibleVotersVotedStateGetsSetToTrue() {
+                void fullyEligibleVotersLastVotedRoundGetsSetTo1() {
                     votingInterface.submitVote(vote, election);
-                    assertTrue(defaultVoter.getVoted());
+                    assertEquals(1, defaultVoter.getLastVotedRound());
                 }
             }
 
             @Nested
             class AlreadyVoted {
                 @BeforeEach
-                void makeAndCheckAlreadyVoted() {
-                    defaultVoter.voted();
-                    assertTrue(defaultVoter.getVoted());
+                void makeAndCheckAlreadyVotedInRound1() {
+                    defaultVoter.setLastVotedRound(1);
+                    assertEquals(1, defaultVoter.getLastVotedRound());
                 }
 
                 @Test
-                void submitVoteReturnsFalseWhenVoterAlreadyVoted() {
+                void submitVoteReturnsFalseWhenVoterAlreadyVotedInRound1() {
                     boolean actual = votingInterface.submitVote(vote, election);
                     assertFalse(actual);
                 }
 
                 @Test
-                void votersVoteIsntAddedToBallotBoxWhenVoterAlreadyVoted() {
+                void votersVoteIsntAddedToBallotBoxWhenVoterAlreadyVotedInRound1() {
                     votingInterface.submitVote(vote, election);
                     assertEquals(0, ballotBox.getVotes().size());
                 }
 
                 @Test
-                void votersVotedStateDoesntChangeWhenVoterAlreadyVoted() {
-                    boolean before = defaultVoter.getVoted();
-                    assertTrue(before);
+                void votersLastVotedRoundDoesntChangeWhenVoterAlreadyVoted() {
+                    int before = defaultVoter.getLastVotedRound();
+                    assertEquals(1, before);
 
                     votingInterface.submitVote(vote, election);
 
-                    boolean after = defaultVoter.getVoted();
+                    int after = defaultVoter.getLastVotedRound();
                     assertEquals(before, after);
                 }
             }
@@ -125,7 +134,7 @@ public class VotingInterfaceTests {
                 this.ineligibleVoter = new Voter("name", "ID", "2022-01-01", false);
 
                 assertFalse(election.isEligibleVoter(this.ineligibleVoter));
-                assertFalse(this.ineligibleVoter.getVoted());
+                assertEquals(0, this.ineligibleVoter.getLastVotedRound());
 
                 this.votingInterface = new VotingInterface(ballotBox, ineligibleVoter);
             }
@@ -143,25 +152,25 @@ public class VotingInterfaceTests {
             }
 
             @Test
-            void ineligibleVotersVoteDoesNotChangeTheirVotedStateWhenNotVotedYet() {
-                boolean before = this.ineligibleVoter.getVoted();
-                assertFalse(before);
+            void ineligibleVotersVoteDoesNotChangeTheirLastVotedRoundWhenNotVotedYetInRound1() {
+                int before = this.ineligibleVoter.getLastVotedRound();
+                assertEquals(0, before);
 
                 this.votingInterface.submitVote(vote, election);
 
-                boolean after = this.ineligibleVoter.getVoted();
+                int after = this.ineligibleVoter.getLastVotedRound();
                 assertEquals(before, after);
             }
 
             @Test
-            void ineligibleVotersVoteDoesNotChangeTheirVotedStateWhenAlreadyVoted() {
-                this.ineligibleVoter.voted();
-                boolean before = this.ineligibleVoter.getVoted();
-                assertTrue(before);
+            void ineligibleVotersVoteDoesNotChangeTheirLastVotedRoundWhenAlreadyVotedInRound1() {
+                this.ineligibleVoter.setLastVotedRound(1);
+                int before = this.ineligibleVoter.getLastVotedRound();
+                assertEquals(1, before);
 
                 this.votingInterface.submitVote(vote, election);
 
-                boolean after = this.ineligibleVoter.getVoted();
+                int after = this.ineligibleVoter.getLastVotedRound();
                 assertEquals(before, after);
             }
         }

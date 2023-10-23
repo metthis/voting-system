@@ -14,9 +14,16 @@ public class VoterRegister extends Register<Voter> {
                 .count();
     }
 
-    public int howManyVoted() {
+    public int howManyVoted(int votingRound) {
+        for (Voter voter : this.register.values()) {
+            if (voter.getLastVotedRound() > votingRound) {
+                throw new IllegalArgumentException(
+                        "Cannot count how many voted because some already voted in a following round.");
+            }
+        }
+
         return (int) this.register.values().stream()
-                .filter(voter -> voter.getVoted())
+                .filter(voter -> voter.getLastVotedRound() == votingRound)
                 .count();
     }
 }
