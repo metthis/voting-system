@@ -94,4 +94,10 @@ public class VotingRoundEvaluator {
         }
         return winners.toArray(Candidate[][]::new);
     }
+
+    public static int getNumberOfWinners(Candidate[][] winners) {
+        return Arrays.stream(winners)
+                .mapToInt(array -> array.length)
+                .sum();
+    }
 }

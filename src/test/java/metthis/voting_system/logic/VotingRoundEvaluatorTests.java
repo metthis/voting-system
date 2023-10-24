@@ -159,7 +159,7 @@ public class VotingRoundEvaluatorTests {
 
         @ParameterizedTest
         @ArgumentsSource(GetRoundWinnersArgumentsProvider.class)
-        void getRoundWinnersIsCorrect(
+        void getRoundWinnersReturnsCorrectly(
                 VotingRound round,
                 int usualNumberOfWinners,
                 Candidate[][] expected) {
@@ -172,6 +172,12 @@ public class VotingRoundEvaluatorTests {
                 Arrays.sort(actual[i]);
                 assertArrayEquals(expected[i], actual[i]);
             }
+        }
+
+        @ParameterizedTest
+        @ArgumentsSource(GetNumberOfWinnersArgumentsProvider.class)
+        void getNumberOfWinnersReturnsCorrectly(int expected, Candidate[][] winners) {
+            assertEquals(expected, VotingRoundEvaluator.getNumberOfWinners(winners));
         }
     }
 }
