@@ -16,7 +16,7 @@ Unit tests for `persons`, `voting`, `logic` and `elections` can be found in `src
 
 ## Entry point
 
-The program can be run by running `metthis.voting_system.programs.Run`. Currently, this method runs the presidential election.
+The program can be run by running `metthis.voting_system.programs.Run.main`. Currently, this method runs the presidential election.
 
 The number of candidates and voters can be adjusted in `RunPresidentialElection.registerCandidates` and `.registerVoters`.
 
