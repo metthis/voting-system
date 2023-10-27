@@ -14,3 +14,9 @@ INSERT INTO
     Voter (PersonID)
 VALUES
     ("ID1");
+
+SELECT
+    (ID, name, dateOfBirth, isCitizen, lastVotedRound)
+FROM
+    Person
+    INNER JOIN Voter ON Person.ID = Voter.PersonID;
