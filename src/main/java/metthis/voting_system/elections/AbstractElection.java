@@ -10,14 +10,6 @@ import metthis.voting_system.persons.VoterRegister;
 import metthis.voting_system.voting.Vote;
 import metthis.voting_system.voting.VotingRound;
 
-/*
- * Stores eligibility criteria
- * Creates a voting round which collects votes according to criteria
- * Uses votes to advance the election
- *  - Creates another round if it's needed
- *  - Saves the result when the election is over
- */
-
 public abstract class AbstractElection implements Election {
     protected final LocalDate ELECTION_DATE;
     protected VoterRegister voters;
