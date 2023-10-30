@@ -11,6 +11,7 @@ The project consists of 5 packages in `src/main/java`:
 - `logic` defines the `VotingRoundEvaluator` which analyzes  submitted votes and translates them into a result
 - `elections` are meant to hold classes containing rules which are specific to different kinds of elections, such as voter and candidate eligibility criteria and vote validity criteria; currently, the only such implemented class is `PresidentialElection`
 - `programs` currently contains only `RunPresidentialElection` which mocks votes and produces a winner
+- `db` is WIP and will contain classes and SQL files meant to store voters, candidates and votes in a database rather than in runtime memory
 
 Unit tests for `persons`, `voting`, `logic` and `elections` can be found in `src/test/java`.
 
@@ -26,6 +27,6 @@ The amount of votes for individual candidates can be adjusted in `.runFirstVotin
 
 I'm still planning to do the following:
 
-- Store voters, candidates and votes in a database rather than in runtime memory
+- [WIP] Store voters, candidates and votes in a database rather than in runtime memory
 - Make the `BallotBox` class encrypt votes submitted into it better anonymise the votes
 - Add more kinds of elections
