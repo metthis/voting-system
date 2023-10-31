@@ -1,4 +1,4 @@
-CREATE TABLE Candidate (
+CREATE TABLE IF NOT EXISTS Candidate (
     PersonID VARCHAR(50) NOT NULL,
     registartionDate DATE NOT NULL,
     withdrawalDate DATE,
