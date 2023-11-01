@@ -1,3 +1,8 @@
-REPLACE INTO Candidate (PersonID, registartionDate)
+REPLACE INTO Candidate (
+    PersonID,
+    registartionDate,
+    withdrawalDate,
+    lostThisElection
+)
 VALUES
-    (?, ?);
+    (?, ?, ?, ?);

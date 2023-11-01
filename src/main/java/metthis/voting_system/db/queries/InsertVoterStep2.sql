@@ -1,3 +1,3 @@
-REPLACE INTO Voter (PersonID)
+REPLACE INTO Voter (PersonID, lastVotedRound)
 VALUES
-    (?);
+    (?, ?);
