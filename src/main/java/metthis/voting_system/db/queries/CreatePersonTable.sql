@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Person (
     ID VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
-    dateOfBirth DATE NOT NULL,
+    dateOfBirth CHAR(10) NOT NULL,
     isCitizen BOOLEAN NOT NULL,
     PRIMARY KEY (ID),
     KEY (name)
