@@ -1,4 +1,3 @@
-INSERT INTO
-    Candidate (PersonID, registartionDate)
+REPLACE INTO Candidate (PersonID, registartionDate)
 VALUES
     (?, ?);

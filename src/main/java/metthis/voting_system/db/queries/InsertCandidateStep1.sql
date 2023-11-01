@@ -1,4 +1,3 @@
-INSERT INTO
-    Person (ID, name, dateOfBirth, isCitizen)
+REPLACE INTO Person (ID, name, dateOfBirth, isCitizen)
 VALUES
     (?, ?, ?, ?);

@@ -1,4 +1,3 @@
-INSERT INTO
-    Voter (PersonID)
+REPLACE INTO Voter (PersonID)
 VALUES
     (?);
