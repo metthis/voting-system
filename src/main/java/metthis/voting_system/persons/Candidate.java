@@ -14,7 +14,7 @@ public class Candidate extends Person {
         this.lostThisElection = false;
     }
 
-    public LocalDate getAplicationDate() {
+    public LocalDate getRegistrationDate() {
         return this.registrationDate;
     }
 

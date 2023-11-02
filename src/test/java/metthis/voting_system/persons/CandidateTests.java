@@ -127,9 +127,9 @@ public class CandidateTests {
     // The following are tests of methods specific to Candidate:
 
     @Test
-    void getApplicationDateIsInLocalDateFormat() {
+    void getRegistrationDateIsInLocalDateFormat() {
         LocalDate expected = LocalDate.of(2023, 03, 15);
-        assertEquals(expected, this.candidate.getAplicationDate());
+        assertEquals(expected, this.candidate.getRegistrationDate());
     }
 
     @Test
