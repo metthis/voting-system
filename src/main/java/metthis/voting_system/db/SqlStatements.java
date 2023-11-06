@@ -1,6 +1,6 @@
 package metthis.voting_system.db;
 
-public class Queries {
+public class SqlStatements {
     public static final String CREATE_PERSON_TABLE;
     public static final String CREATE_CANDIDATE_TABLE;
     public static final String CREATE_VOTER_TABLE;
@@ -92,7 +92,6 @@ public class Queries {
 
         SELECT_ALL_CANDIDATES = """
                 SELECT
-                (
                     ID,
                     name,
                     dateOfBirth,
@@ -100,7 +99,6 @@ public class Queries {
                     registartionDate,
                     withdrawalDate,
                     lostThisElection
-                )
                 FROM
                     Person
                     INNER JOIN Candidate ON Person.ID = Candidate.PersonID;
@@ -108,7 +106,7 @@ public class Queries {
 
         SELECT_ALL_VOTERS = """
                 SELECT
-                (ID, name, dateOfBirth, isCitizen, lastVotedRound)
+                ID, name, dateOfBirth, isCitizen, lastVotedRound
                 FROM
                     Person
                     INNER JOIN Voter ON Person.ID = Voter.PersonID;
