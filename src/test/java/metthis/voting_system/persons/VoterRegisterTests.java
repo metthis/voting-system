@@ -233,6 +233,18 @@ public class VoterRegisterTests {
     }
 
     @Test
+    void isEmptyReturnsTrueWhenEmpty() {
+        assertTrue(this.voterRegister.isEmpty());
+    }
+
+    @Test
+    void isEmptyReturnsFalseWhenOneVoterWasAdded() {
+        Voter voter = new Voter("1", "1", "2000-01-01", true);
+        this.voterRegister.addIfAbsent(voter);
+        assertFalse(this.voterRegister.isEmpty());
+    }
+
+    @Test
     void containsReturnsTrueWhenBothVotersAreTheSameObject() {
         Voter voter = new Voter("1", "1", "2000-01-01", true);
         this.voterRegister.addIfAbsent(voter);

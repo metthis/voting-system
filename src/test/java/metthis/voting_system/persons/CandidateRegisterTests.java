@@ -232,6 +232,18 @@ public class CandidateRegisterTests {
     }
 
     @Test
+    void isEmptyReturnsTrueWhenEmpty() {
+        assertTrue(this.candidateRegister.isEmpty());
+    }
+
+    @Test
+    void isEmptyReturnsFalseWhenOneCandidateWasAdded() {
+        Candidate candidate = new Candidate("1", "1", "2000-01-01", true, "2023-01-01");
+        this.candidateRegister.addIfAbsent(candidate);
+        assertFalse(this.candidateRegister.isEmpty());
+    }
+
+    @Test
     void containsReturnsTrueWhenBothCandidatesAreTheSameObject() {
         Candidate candidate = new Candidate("1", "1", "2000-01-01", true, "2000-01-01");
         this.candidateRegister.addIfAbsent(candidate);
