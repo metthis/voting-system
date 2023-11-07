@@ -30,7 +30,7 @@ public class SqlStatements {
         CREATE_CANDIDATE_TABLE = """
                 CREATE TABLE Candidate (
                     PersonID VARCHAR(50) NOT NULL,
-                    registartionDate CHAR(10) NOT NULL,
+                    registrationDate CHAR(10) NOT NULL,
                     withdrawalDate CHAR(10),
                     lostThisElection BOOLEAN DEFAULT 0,
                     PRIMARY KEY (PersonID),
@@ -76,7 +76,7 @@ public class SqlStatements {
         INSERT_CANDIDATE = """
                 REPLACE INTO Candidate (
                     PersonID,
-                    registartionDate,
+                    registrationDate,
                     withdrawalDate,
                     lostThisElection
                 )
@@ -96,7 +96,7 @@ public class SqlStatements {
                     name,
                     dateOfBirth,
                     isCitizen,
-                    registartionDate,
+                    registrationDate,
                     withdrawalDate,
                     lostThisElection
                 FROM
