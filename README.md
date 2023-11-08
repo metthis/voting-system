@@ -13,7 +13,7 @@ The project consists of 5 packages in `src/main/java`:
 - `programs` currently contains only `RunPresidentialElection` which mocks votes and produces a winner
 - `db` is WIP and will contain classes and SQL files meant to store voters, candidates and votes in a database rather than in runtime memory
 
-Unit tests for `persons`, `voting`, `logic` and `elections` can be found in `src/test/java`.
+Tests for `persons`, `voting`, `logic` and `elections` can be found in `src/test/java`.
 
 ## Entry point
 
