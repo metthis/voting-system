@@ -1,5 +1,8 @@
 package metthis.voting_system.persons;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Voter extends Person {
     private int lastVotedRound;
 

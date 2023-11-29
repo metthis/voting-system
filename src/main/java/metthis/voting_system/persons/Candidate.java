@@ -2,9 +2,14 @@ package metthis.voting_system.persons;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Candidate extends Person {
     private LocalDate registrationDate;
+
     private LocalDate withdrawalDate;
+
     private boolean lostThisElection;
 
     public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String registrationDate) {
