@@ -2,15 +2,19 @@ package metthis.voting_system.persons;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
 public class Candidate extends Person {
+
+    @Column(nullable = false)
     private LocalDate registrationDate;
 
     private LocalDate withdrawalDate;
 
-    private boolean lostThisElection;
+    @Column(nullable = false)
+    private boolean lostThisElection = false;
 
     public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String registrationDate) {
         super(name, ID, dateOfBirth, isCitizen);

@@ -3,6 +3,7 @@ package metthis.voting_system.persons;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,10 +17,13 @@ public abstract class Person implements Comparable<Person> {
     @GeneratedValue
     private String ID;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private LocalDate dateOfBirth;
 
+    @Column(nullable = false)
     private boolean isCitizen;
 
     public Person(String name, String ID, String dateOfBirth, boolean isCitizen) {
