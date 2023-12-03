@@ -2,6 +2,7 @@ package metthis.voting_system.persons;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -12,7 +13,8 @@ public abstract class PersonRepositoryCustomImpl<P extends Person> {
     PersonRepository<P> personRepository;
 
     private P getPersonById(P person) {
-        return personRepository.findById(person.getID()).get();
+        Optional<P> optionalPerson = personRepository.findById(person.getID());
+        return optionalPerson.isPresent() ? optionalPerson.get() : null;
     }
 
     public P addIfAbsent(P person) {
