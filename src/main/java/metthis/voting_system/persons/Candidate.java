@@ -14,7 +14,7 @@ public class Candidate extends Person {
     private LocalDate withdrawalDate;
 
     @Column(nullable = false)
-    private boolean lostThisElection = false;
+    private boolean lostThisElection;
 
     public Candidate() {
         super();

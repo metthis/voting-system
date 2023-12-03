@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 public class Voter extends Person {
 
     @Column(nullable = false)
-    private int lastVotedRound = 0;
+    private int lastVotedRound;
 
     public Voter() {
         super();
@@ -15,6 +15,7 @@ public class Voter extends Person {
 
     public Voter(String name, String ID, String dateOfBirth, boolean isCitizen) {
         super(name, ID, dateOfBirth, isCitizen);
+        this.lastVotedRound = 0;
     }
 
     public int getLastVotedRound() {
