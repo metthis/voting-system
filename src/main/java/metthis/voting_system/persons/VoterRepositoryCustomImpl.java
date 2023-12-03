@@ -2,6 +2,7 @@ package metthis.voting_system.persons;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import metthis.voting_system.elections.Election;
 
@@ -28,7 +29,10 @@ public class VoterRepositoryCustomImpl
         int count = 0;
         for (Voter voter : voterRepository.findAll()) {
             if (voter.getLastVotedRound() > votingRound) {
-                throw new IllegalArgumentException(
+                // Throws InvalidDataAccessApiUsageException because if it were to throw
+                // a different exception type, Spring Data JPA would catch it and throw
+                // InvalidDataAccessApiUsageException instead anyways.
+                throw new InvalidDataAccessApiUsageException(
                         "Cannot count how many voted because some already voted in a following round.");
             }
             if (voter.getLastVotedRound() == votingRound) {
