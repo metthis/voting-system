@@ -27,6 +27,7 @@ The amount of votes for individual candidates can be adjusted in `.runFirstVotin
 
 I'm still planning to do the following:
 
-- [WIP] Store voters, candidates and votes in a database rather than in runtime memory
+- [WIP] Implement the system as a Spring Boot app with an API
+- [WIP ON HOLD] Store voters, candidates and votes in a database rather than in runtime memory
 - Make the `BallotBox` class encrypt votes submitted into it better anonymise the votes
 - Add more kinds of elections
