@@ -16,6 +16,10 @@ public class Candidate extends Person {
     @Column(nullable = false)
     private boolean lostThisElection = false;
 
+    public Candidate() {
+        super();
+    }
+
     public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String registrationDate) {
         super(name, ID, dateOfBirth, isCitizen);
         this.registrationDate = LocalDate.parse(registrationDate);

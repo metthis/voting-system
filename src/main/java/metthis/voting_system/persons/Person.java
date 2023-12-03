@@ -24,6 +24,9 @@ public abstract class Person implements Comparable<Person> {
     @Column(nullable = false)
     private boolean isCitizen;
 
+    public Person() {
+    }
+
     public Person(String name, String ID, String dateOfBirth, boolean isCitizen) {
         this.name = name;
         this.ID = ID;

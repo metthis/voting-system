@@ -9,6 +9,10 @@ public class Voter extends Person {
     @Column(nullable = false)
     private int lastVotedRound = 0;
 
+    public Voter() {
+        super();
+    }
+
     public Voter(String name, String ID, String dateOfBirth, boolean isCitizen) {
         super(name, ID, dateOfBirth, isCitizen);
     }
