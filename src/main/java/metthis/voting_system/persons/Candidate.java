@@ -11,10 +11,10 @@ public class Candidate extends Person {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
-    private LocalDate withdrawalDate;
+    private LocalDate withdrawalDate = null;
 
     @Column(nullable = false)
-    private boolean lostThisElection;
+    private boolean lostThisElection = false;
 
     public Candidate() {
         super();
@@ -23,8 +23,6 @@ public class Candidate extends Person {
     public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String registrationDate) {
         super(name, ID, dateOfBirth, isCitizen);
         this.registrationDate = LocalDate.parse(registrationDate);
-        this.withdrawalDate = null;
-        this.lostThisElection = false;
     }
 
     public LocalDate getRegistrationDate() {
