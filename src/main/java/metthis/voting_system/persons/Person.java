@@ -13,6 +13,7 @@ import jakarta.persistence.InheritanceType;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person implements Comparable<Person> {
     @Id
+    @Column(nullable = false)
     private String ID;
 
     @Column(nullable = false)
