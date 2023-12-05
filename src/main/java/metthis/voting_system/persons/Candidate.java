@@ -14,13 +14,13 @@ public class Candidate extends Person {
     private LocalDate withdrawalDate = null;
 
     @Column(nullable = false)
-    private boolean lostThisElection = false;
+    private Boolean lostThisElection = false;
 
     public Candidate() {
         super();
     }
 
-    public Candidate(String name, String ID, String dateOfBirth, boolean isCitizen, String registrationDate) {
+    public Candidate(String name, String ID, String dateOfBirth, Boolean isCitizen, String registrationDate) {
         super(name, ID, dateOfBirth, isCitizen);
         this.registrationDate = LocalDate.parse(registrationDate);
     }
@@ -37,11 +37,11 @@ public class Candidate extends Person {
         this.withdrawalDate = LocalDate.parse(date);
     }
 
-    public boolean getLostThisElection() {
+    public Boolean getLostThisElection() {
         return this.lostThisElection;
     }
 
-    public void setLostThisElection(boolean value) {
+    public void setLostThisElection(Boolean value) {
         this.lostThisElection = value;
     }
 }

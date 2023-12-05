@@ -23,12 +23,12 @@ public abstract class Person implements Comparable<Person> {
     private LocalDate dateOfBirth;
 
     @Column(nullable = false)
-    private boolean isCitizen;
+    private Boolean isCitizen;
 
     public Person() {
     }
 
-    public Person(String name, String ID, String dateOfBirth, boolean isCitizen) {
+    public Person(String name, String ID, String dateOfBirth, Boolean isCitizen) {
         this.name = name;
         this.ID = ID;
         this.dateOfBirth = LocalDate.parse(dateOfBirth);
@@ -47,7 +47,7 @@ public abstract class Person implements Comparable<Person> {
         return this.dateOfBirth;
     }
 
-    public boolean getIsCitizen() {
+    public Boolean getIsCitizen() {
         return this.isCitizen;
     }
 
