@@ -149,7 +149,7 @@ public class CandidateTests {
 
         @Test
         void withdrawalDateCanBeSetToLocalDateFormat() {
-            candidate.withdraw("2023-10-31");
+            candidate.setWithdrawalDate("2023-10-31");
             LocalDate expected = LocalDate.of(2023, 10, 31);
             assertEquals(expected, candidate.getWithdrawalDate());
         }

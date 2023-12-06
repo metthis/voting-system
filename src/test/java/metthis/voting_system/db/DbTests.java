@@ -322,7 +322,7 @@ public class DbTests {
                 candidate1.setLostThisElection(lostThisElection1);
 
                 Candidate candidate2 = new Candidate(name2, ID2, dateOfBirth2, isCitizen2, registrationDate2);
-                candidate2.withdraw(withdrawalDate2);
+                candidate2.setWithdrawalDate(withdrawalDate2);
                 candidate2.setLostThisElection(lostThisElection2);
 
                 db.insertCandidate(candidate1);
@@ -371,7 +371,7 @@ public class DbTests {
                 originalCandidate.setLostThisElection(lostThisElection1);
 
                 Candidate newCandidate = new Candidate(name2, ID2, dateOfBirth2, isCitizen2, registrationDate2);
-                newCandidate.withdraw(withdrawalDate2);
+                newCandidate.setWithdrawalDate(withdrawalDate2);
                 newCandidate.setLostThisElection(lostThisElection2);
 
                 db.insertCandidate(originalCandidate);
@@ -424,7 +424,7 @@ public class DbTests {
                 candidate1.setLostThisElection(lostThisElection1);
 
                 Candidate candidate2 = new Candidate(name2, ID2, dateOfBirth2, isCitizen2, registrationDate2);
-                candidate2.withdraw(withdrawalDate2);
+                candidate2.setWithdrawalDate(withdrawalDate2);
                 candidate2.setLostThisElection(lostThisElection2);
 
                 CandidateRegister register = new CandidateRegister();
@@ -672,7 +672,7 @@ public class DbTests {
                 candidate1.setLostThisElection(lostThisElection1);
 
                 candidate2 = new Candidate(name2, ID2, dateOfBirth2, isCitizen2, registrationDate2);
-                candidate2.withdraw(withdrawalDate2);
+                candidate2.setWithdrawalDate(withdrawalDate2);
                 candidate2.setLostThisElection(lostThisElection2);
 
                 db.insertCandidate(candidate1);

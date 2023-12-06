@@ -315,8 +315,8 @@ public class CandidateRegisterTests {
         this.candidateRegister.addIfAbsent(firstCandidate);
         this.candidateRegister.addIfAbsent(secondCandidate);
         this.candidateRegister.addIfAbsent(thirdCandidate);
-        firstCandidate.withdraw("2023-02-01");
-        secondCandidate.withdraw("2023-02-01");
+        firstCandidate.setWithdrawalDate("2023-02-01");
+        secondCandidate.setWithdrawalDate("2023-02-01");
 
         int withdrawnCandidates = this.candidateRegister.howManyWithdrew();
 

@@ -168,7 +168,7 @@ public class PresidentialElectionTests {
             void registeredCitizen40HasWithdrawnNotLostIsNotEligible() {
                 Candidate candidate = new Candidate("name", "ID", "1960-01-01", true, ELECTION_DATE);
                 election.getCandidates().addIfAbsent(candidate);
-                candidate.withdraw(ELECTION_DATE);
+                candidate.setWithdrawalDate(ELECTION_DATE);
 
                 assertEquals(40, candidate.getAge(LocalDate.parse(ELECTION_DATE)));
                 assertFalse(candidate.getLostThisElection());

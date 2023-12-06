@@ -238,7 +238,7 @@ public class Db {
                     rs.getString("registrationDate"));
             String withdrawalDate = rs.getString("withdrawalDate");
             if (withdrawalDate != null) {
-                candidate.withdraw(withdrawalDate);
+                candidate.setWithdrawalDate(withdrawalDate);
             }
             candidate.setLostThisElection(rs.getBoolean("lostThisElection"));
 

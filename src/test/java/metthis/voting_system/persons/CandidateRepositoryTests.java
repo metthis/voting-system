@@ -84,8 +84,8 @@ public class CandidateRepositoryTests {
         Candidate secondCandidate = new Candidate("2", "2", "2020-12-12", true, "2023-01-01");
         Candidate thirdCandidate = new Candidate("3", "3", "2022-12-12", true, "2023-01-01");
 
-        firstCandidate.withdraw("2023-02-01");
-        secondCandidate.withdraw("2023-02-01");
+        firstCandidate.setWithdrawalDate("2023-02-01");
+        secondCandidate.setWithdrawalDate("2023-02-01");
 
         this.candidateRepository.save(firstCandidate);
         this.candidateRepository.save(secondCandidate);

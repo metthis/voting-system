@@ -33,7 +33,7 @@ public class Candidate extends Person {
         return this.withdrawalDate;
     }
 
-    public void withdraw(String date) {
+    public void setWithdrawalDate(String date) {
         this.withdrawalDate = (date == null) ? null : LocalDate.parse(date);
     }
 
