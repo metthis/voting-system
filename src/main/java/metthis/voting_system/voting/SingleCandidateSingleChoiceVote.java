@@ -1,8 +1,21 @@
 package metthis.voting_system.voting;
 
+import java.util.UUID;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import metthis.voting_system.persons.Candidate;
 
+@Entity
 public class SingleCandidateSingleChoiceVote implements Vote {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    @ManyToOne
     private Candidate choice;
 
     public SingleCandidateSingleChoiceVote(Candidate choice) {
