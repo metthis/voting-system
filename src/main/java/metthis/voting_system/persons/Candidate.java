@@ -22,7 +22,7 @@ public class Candidate extends Person {
 
     public Candidate(String name, String ID, String dateOfBirth, Boolean isCitizen, String registrationDate) {
         super(name, ID, dateOfBirth, isCitizen);
-        this.registrationDate = LocalDate.parse(registrationDate);
+        this.registrationDate = (registrationDate == null) ? null : LocalDate.parse(registrationDate);
     }
 
     public LocalDate getRegistrationDate() {
@@ -34,7 +34,7 @@ public class Candidate extends Person {
     }
 
     public void withdraw(String date) {
-        this.withdrawalDate = LocalDate.parse(date);
+        this.withdrawalDate = (date == null) ? null : LocalDate.parse(date);
     }
 
     public Boolean getLostThisElection() {
