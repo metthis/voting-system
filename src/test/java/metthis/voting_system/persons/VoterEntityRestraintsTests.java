@@ -15,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 public class VoterEntityRestraintsTests {
 
     @Autowired
-    VoterRepository voterRepository;
+    private VoterRepository voterRepository;
 
     @AfterEach
     void deleteAll() {
