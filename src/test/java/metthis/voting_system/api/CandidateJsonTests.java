@@ -36,20 +36,6 @@ public class CandidateJsonTests {
     void candidateIsSerializedCorrectly() throws IOException {
         JsonContent<Candidate> candidateJson = json.write(candidates[0]);
         assertThat(candidateJson).isStrictlyEqualToJson("candidate.json");
-        assertThat(candidateJson).hasJsonPathStringValue("@.id");
-        assertThat(candidateJson).extractingJsonPathStringValue("@.id", "123789");
-        assertThat(candidateJson).hasJsonPathStringValue("@.name");
-        assertThat(candidateJson).extractingJsonPathStringValue("@.name", "John Doe");
-        assertThat(candidateJson).hasJsonPathStringValue("@.dateOfBirth");
-        assertThat(candidateJson).extractingJsonPathStringValue("@.dateOfBirth", "1960-06-30");
-        assertThat(candidateJson).hasJsonPathBooleanValue("@.isCitizen");
-        assertThat(candidateJson).extractingJsonPathBooleanValue("@.isCitizen", true);
-        assertThat(candidateJson).hasJsonPathStringValue("@.registrationDate");
-        assertThat(candidateJson).extractingJsonPathStringValue("@.registrationDate", "2023-12-01");
-        assertThat(candidateJson).hasJsonPath("@.withdrawalDate");
-        assertThat(candidateJson).doesNotHaveJsonPathValue("@.withdrawalDate");
-        assertThat(candidateJson).hasJsonPathBooleanValue("@.lostThisElection");
-        assertThat(candidateJson).extractingJsonPathBooleanValue("@.lostThisElection", false);
     }
 
 }
