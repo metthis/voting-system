@@ -1,0 +1,9 @@
+{
+    "name": "John Smith",
+    "id": "123789",
+    "dateOfBirth": "1960-06-30",
+    "isCitizen": true,
+    "registrationDate": "2023-12-01",
+    "withdrawalDate": null,
+    "lostThisElection": false
+}
