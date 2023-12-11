@@ -77,7 +77,7 @@ public class Db {
             PreparedStatement pstmt,
             P person)
             throws SQLException {
-        pstmt.setString(1, person.getID());
+        pstmt.setString(1, person.getId());
         pstmt.setString(2, person.getName());
         pstmt.setString(3, person.getDateOfBirth().toString());
         pstmt.setBoolean(4, person.getIsCitizen());
@@ -87,7 +87,7 @@ public class Db {
             PreparedStatement pstmt,
             Candidate candidate)
             throws SQLException {
-        pstmt.setString(1, candidate.getID());
+        pstmt.setString(1, candidate.getId());
         pstmt.setString(2, candidate.getRegistrationDate().toString());
         if (candidate.getWithdrawalDate() != null) {
             pstmt.setString(3, candidate.getWithdrawalDate().toString());
@@ -101,7 +101,7 @@ public class Db {
             PreparedStatement pstmt,
             Voter voter)
             throws SQLException {
-        pstmt.setString(1, voter.getID());
+        pstmt.setString(1, voter.getId());
         pstmt.setInt(2, voter.getLastVotedRound());
     }
 

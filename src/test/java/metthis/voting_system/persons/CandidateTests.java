@@ -46,7 +46,7 @@ public class CandidateTests {
 
         @Test
         void canGetID() {
-            assertEquals("12345678", candidate.getID());
+            assertEquals("12345678", candidate.getId());
         }
 
         @Test
@@ -130,8 +130,8 @@ public class CandidateTests {
             Candidate[] resultedOrderInputsFlipped = { largerCandidate, smallerCandidate };
             Arrays.sort(resultedOrderInputsFlipped);
 
-            assertEquals(smallerID, resultedOrder[0].getID(), resultedOrderInputsFlipped[0].getID());
-            assertEquals(largerID, resultedOrder[1].getID(), resultedOrderInputsFlipped[1].getID());
+            assertEquals(smallerID, resultedOrder[0].getId(), resultedOrderInputsFlipped[0].getId());
+            assertEquals(largerID, resultedOrder[1].getId(), resultedOrderInputsFlipped[1].getId());
         }
 
         // The following are tests specific to Candidate:

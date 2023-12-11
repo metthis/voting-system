@@ -13,6 +13,6 @@ public abstract class PersonRepositoryCustomImpl<P extends Person> {
     }
 
     public boolean exists(P person) {
-        return personRepository.existsById(person.getID());
+        return personRepository.existsById(person.getId());
     }
 }

@@ -120,13 +120,13 @@ public class VotingRoundEvaluatorTests {
             for (Vote vote : round.getVotes().keySet()) {
                 Candidate candidate = vote.getChoice();
                 if (candidate == null ||
-                        candidate.getID().equals(nonRegisteredCandidateId)) {
+                        candidate.getId().equals(nonRegisteredCandidateId)) {
                     continue;
                 }
                 election.getCandidates().addIfAbsent(candidate);
             }
             for (Candidate candidate : election.getCandidates().getRegister().values()) {
-                assertNotEquals(nonRegisteredCandidateId, candidate.getID(),
+                assertNotEquals(nonRegisteredCandidateId, candidate.getId(),
                         "Registered candidates: " + election.getCandidates()
                                 .getRegister().size());
             }

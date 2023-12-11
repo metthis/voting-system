@@ -13,19 +13,19 @@ public abstract class Register<P extends Person> {
     }
 
     public P addIfAbsent(P person) {
-        return this.register.putIfAbsent(person.getID(), person);
+        return this.register.putIfAbsent(person.getId(), person);
     }
 
     public P update(P person) {
-        return this.register.replace(person.getID(), person);
+        return this.register.replace(person.getId(), person);
     }
 
     public P addOrUpdate(P person) {
-        return this.register.put(person.getID(), person);
+        return this.register.put(person.getId(), person);
     }
 
     public P remove(P person) {
-        return this.register.remove(person.getID());
+        return this.register.remove(person.getId());
     }
 
     public void clear() {
@@ -37,7 +37,7 @@ public abstract class Register<P extends Person> {
     }
 
     public boolean contains(P person) {
-        P containedPerson = this.register.get(person.getID());
+        P containedPerson = this.register.get(person.getId());
         return containedPerson == person;
     }
 

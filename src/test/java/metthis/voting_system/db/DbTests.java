@@ -733,8 +733,8 @@ public class DbTests {
 
                     assertEquals(expectedCandidate.getName(),
                             actualCandidate.getName());
-                    assertEquals(expectedCandidate.getID(),
-                            actualCandidate.getID());
+                    assertEquals(expectedCandidate.getId(),
+                            actualCandidate.getId());
                     assertEquals(expectedCandidate.getDateOfBirth(),
                             actualCandidate.getDateOfBirth());
                     assertEquals(expectedCandidate.getIsCitizen(),
@@ -831,8 +831,8 @@ public class DbTests {
 
                     assertEquals(expectedVoter.getName(),
                             actualVoter.getName());
-                    assertEquals(expectedVoter.getID(),
-                            actualVoter.getID());
+                    assertEquals(expectedVoter.getId(),
+                            actualVoter.getId());
                     assertEquals(expectedVoter.getDateOfBirth(),
                             actualVoter.getDateOfBirth());
                     assertEquals(expectedVoter.getIsCitizen(),
