@@ -48,7 +48,9 @@ public class CandidateJsonTests {
     @Test
     void candidateIsDesirializedCorrectly() throws IOException {
         byte[] actualBytes = testUtils.fileToBytes("candidate.json");
-        assertThat(json.parse(actualBytes)).isEqualTo(candidates[0]);
+        assertThat(json.parse(actualBytes))
+                .usingRecursiveComparison()
+                .isEqualTo(candidates[0]);
     }
 
     @Test
@@ -59,6 +61,8 @@ public class CandidateJsonTests {
     @Test
     void candidateListIsDesirializedCorrectly() throws IOException {
         byte[] actualBytes = testUtils.fileToBytes("candidateList.json");
-        assertThat(jsonList.parse(actualBytes)).isEqualTo(candidates);
+        assertThat(jsonList.parse(actualBytes))
+                .usingRecursiveComparison()
+                .isEqualTo(candidates);
     }
 }
