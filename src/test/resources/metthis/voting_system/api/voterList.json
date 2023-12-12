@@ -1,0 +1,16 @@
+[
+    {
+        "name": "John Smith",
+        "id": "123789",
+        "dateOfBirth": "1960-06-30",
+        "isCitizen": true,
+        "lastVotedRound": 0
+    },
+    {
+        "name": "Jane Doe",
+        "id": "7878002",
+        "dateOfBirth": "1972-01-01",
+        "isCitizen": false,
+        "lastVotedRound": 2
+    }
+]

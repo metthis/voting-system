@@ -1,0 +1,7 @@
+{
+    "name": "John Smith",
+    "id": "123789",
+    "dateOfBirth": "1960-06-30",
+    "isCitizen": true,
+    "lastVotedRound": 0
+}
