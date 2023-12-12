@@ -2,12 +2,17 @@ package metthis.voting_system.voting;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import metthis.voting_system.persons.Candidate;
 
@@ -26,6 +31,9 @@ public abstract class Vote {
     private Integer votingRound;
 
     @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Candidate choice;
 
     public Vote(Integer votingRound, Candidate choice) {
@@ -43,6 +51,10 @@ public abstract class Vote {
     }
 
     public Vote() {
+    }
+
+    public UUID getId() {
+        return this.id;
     }
 
     public Integer getVotingRound() {
