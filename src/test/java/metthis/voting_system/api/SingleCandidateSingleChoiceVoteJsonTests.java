@@ -22,9 +22,9 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     @Autowired
     private JacksonTester<SingleCandidateSingleChoiceVote[]> jsonList;
 
-    private static Candidate candidate;
+    private static SingleCandidateSingleChoiceVote[] votesToSerialize;
 
-    private static SingleCandidateSingleChoiceVote[] votes;
+    private static SingleCandidateSingleChoiceVote[] votesDeserialized;
 
     private static TestUtils testUtils;
 
@@ -34,20 +34,27 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     }
 
     @BeforeAll
-    static void initCandidateAndVotes() {
-        candidate = new Candidate("John Smith", "123789", "1960-06-30", true, "2023-12-01");
-        votes = Arrays.array(
+    static void initCandidatesAndVotes() {
+        Candidate candidateToSerialize = new Candidate("John Smith", "123789", "1960-06-30", true, "2023-12-01");
+        votesToSerialize = Arrays.array(
                 new SingleCandidateSingleChoiceVote(
                         1,
-                        candidate),
+                        candidateToSerialize),
                 new SingleCandidateSingleChoiceVote(
                         3,
                         null));
+
+        Candidate candidateDeserialized = new Candidate(null, "123789", null, null, null);
+        votesDeserialized = Arrays.array(
+                new SingleCandidateSingleChoiceVote(
+                        1,
+                        candidateDeserialized),
+                votesToSerialize[1]);
     }
 
     @Test
     void voteIsSerializedCorrectly() throws IOException {
-        assertThat(json.write(votes[0]))
+        assertThat(json.write(votesToSerialize[0]))
                 .isStrictlyEqualToJson("singleCandidateSingleChoiceVote.json");
     }
 
@@ -57,12 +64,12 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
                 .fileToBytes("singleCandidateSingleChoiceVote.json");
         assertThat(json.parse(actualBytes))
                 .usingRecursiveComparison()
-                .isEqualTo(votes[0]);
+                .isEqualTo(votesDeserialized[0]);
     }
 
     @Test
     void voteListIsSerializedCorrectly() throws IOException {
-        assertThat(jsonList.write(votes))
+        assertThat(jsonList.write(votesToSerialize))
                 .isStrictlyEqualToJson("singleCandidateSingleChoiceVoteList.json");
     }
 
@@ -72,6 +79,6 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
                 .fileToBytes("singleCandidateSingleChoiceVoteList.json");
         assertThat(jsonList.parse(actualBytes))
                 .usingRecursiveComparison()
-                .isEqualTo(votes);
+                .isEqualTo(votesDeserialized);
     }
 }
