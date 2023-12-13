@@ -13,8 +13,8 @@ public class Voter extends Person {
         super();
     }
 
-    public Voter(String name, String ID, String dateOfBirth, Boolean isCitizen) {
-        super(name, ID, dateOfBirth, isCitizen);
+    public Voter(String name, String id, String dateOfBirth, Boolean isCitizen) {
+        super(name, id, dateOfBirth, isCitizen);
     }
 
     public Integer getLastVotedRound() {

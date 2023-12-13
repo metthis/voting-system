@@ -28,9 +28,9 @@ public abstract class Person implements Comparable<Person> {
     public Person() {
     }
 
-    public Person(String name, String ID, String dateOfBirth, Boolean isCitizen) {
+    public Person(String name, String id, String dateOfBirth, Boolean isCitizen) {
         this.name = name;
-        this.id = ID;
+        this.id = id;
         this.dateOfBirth = (dateOfBirth == null) ? null : LocalDate.parse(dateOfBirth);
         this.isCitizen = isCitizen;
     }

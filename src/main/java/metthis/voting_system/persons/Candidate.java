@@ -20,8 +20,8 @@ public class Candidate extends Person {
         super();
     }
 
-    public Candidate(String name, String ID, String dateOfBirth, Boolean isCitizen, String registrationDate) {
-        super(name, ID, dateOfBirth, isCitizen);
+    public Candidate(String name, String id, String dateOfBirth, Boolean isCitizen, String registrationDate) {
+        super(name, id, dateOfBirth, isCitizen);
         this.registrationDate = (registrationDate == null) ? null : LocalDate.parse(registrationDate);
     }
 
