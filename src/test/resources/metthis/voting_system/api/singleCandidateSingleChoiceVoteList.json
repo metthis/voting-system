@@ -1,13 +1,11 @@
 [
     {
-        "id": null,
         "votingRound": 1,
         "choice": {
             "id": "123789"
         }
     },
     {
-        "id": null,
         "votingRound": 3,
         "choice": null
     }

@@ -2,6 +2,7 @@ package metthis.voting_system.voting;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -23,6 +24,7 @@ import metthis.voting_system.persons.Candidate;
 public abstract class Vote {
     @Id
     @GeneratedValue
+    @JsonIgnore
     private UUID id;
 
     @Column(nullable = false)
