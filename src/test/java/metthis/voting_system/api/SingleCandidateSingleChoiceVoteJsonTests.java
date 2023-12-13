@@ -22,6 +22,8 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     @Autowired
     private JacksonTester<SingleCandidateSingleChoiceVote[]> jsonList;
 
+    private static Candidate candidate;
+
     private static SingleCandidateSingleChoiceVote[] votes;
 
     private static TestUtils testUtils;
@@ -32,11 +34,12 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     }
 
     @BeforeAll
-    static void initVotes() {
+    static void initCandidateAndVotes() {
+        candidate = new Candidate("John Smith", "123789", "1960-06-30", true, "2023-12-01");
         votes = Arrays.array(
                 new SingleCandidateSingleChoiceVote(
                         1,
-                        new Candidate("John Smith", "123789", "1960-06-30", true, "2023-12-01")),
+                        candidate),
                 new SingleCandidateSingleChoiceVote(
                         3,
                         null));
