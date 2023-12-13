@@ -2,7 +2,9 @@
     {
         "id": null,
         "votingRound": 1,
-        "choice": "123789"
+        "choice": {
+            "id": "123789"
+        }
     },
     {
         "id": null,
