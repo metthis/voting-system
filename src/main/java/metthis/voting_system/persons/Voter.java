@@ -24,4 +24,21 @@ public class Voter extends Person {
     public void setLastVotedRound(Integer value) {
         this.lastVotedRound = value;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("Candidate{")
+                .append(name)
+                .append(", ")
+                .append(id)
+                .append(", ")
+                .append(dateOfBirth)
+                .append(", ")
+                .append(isCitizen)
+                .append(", ")
+                .append(lastVotedRound)
+                .append("}")
+                .toString();
+    }
 }

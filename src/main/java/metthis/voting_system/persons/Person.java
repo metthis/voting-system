@@ -14,16 +14,16 @@ import jakarta.persistence.InheritanceType;
 public abstract class Person implements Comparable<Person> {
     @Id
     @Column(nullable = false)
-    private String id;
+    protected String id;
 
     @Column(nullable = false)
-    private String name;
+    protected String name;
 
     @Column(nullable = false)
-    private LocalDate dateOfBirth;
+    protected LocalDate dateOfBirth;
 
     @Column(nullable = false)
-    private Boolean isCitizen;
+    protected Boolean isCitizen;
 
     public Person() {
     }
@@ -58,6 +58,9 @@ public abstract class Person implements Comparable<Person> {
     public int getAge(LocalDate onDate) {
         return (int) this.dateOfBirth.until(onDate, ChronoUnit.YEARS);
     }
+
+    @Override
+    public abstract String toString();
 
     @Override
     public int hashCode() {

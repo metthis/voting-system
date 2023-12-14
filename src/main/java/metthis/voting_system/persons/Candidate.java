@@ -44,4 +44,25 @@ public class Candidate extends Person {
     public void setLostThisElection(Boolean value) {
         this.lostThisElection = value;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("Candidate{")
+                .append(name)
+                .append(", ")
+                .append(id)
+                .append(", ")
+                .append(dateOfBirth)
+                .append(", ")
+                .append(isCitizen)
+                .append(", ")
+                .append(registrationDate)
+                .append(", ")
+                .append(withdrawalDate)
+                .append(", ")
+                .append(lostThisElection)
+                .append("}")
+                .toString();
+    }
 }
