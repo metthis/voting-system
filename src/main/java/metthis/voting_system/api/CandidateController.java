@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/candidates")
 public class CandidateController {
@@ -24,5 +26,11 @@ public class CandidateController {
         Candidate candidate = candidateRepository.findById(id)
                 .orElseThrow(() -> new CandidateNotFoundException(id));
         return ResponseEntity.ok(candidate);
+    }
+
+    @GetMapping
+    private ResponseEntity<List<Candidate>> all() {
+        List<Candidate> candidates = candidateRepository.findAll();
+        return ResponseEntity.ok(candidates);
     }
 }
