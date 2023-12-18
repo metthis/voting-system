@@ -35,7 +35,7 @@ public class CandidateControllerTests {
         String dateOfBirth = documentContext.read("$.dateOfBirth");
         assertThat(dateOfBirth).isEqualTo("1985-03-15");
 
-        boolean isCitizen = documentContext.read("$.isCitizen");
+        Boolean isCitizen = documentContext.read("$.isCitizen");
         assertThat(isCitizen).isEqualTo(true);
 
         String registrationDate = documentContext.read("$.registrationDate");
@@ -44,7 +44,7 @@ public class CandidateControllerTests {
         String withdrawalDate = documentContext.read("$.withdrawalDate");
         assertThat(withdrawalDate).isEqualTo(null);
 
-        boolean lostThisElection = documentContext.read("$.lostThisElection");
+        Boolean lostThisElection = documentContext.read("$.lostThisElection");
         assertThat(lostThisElection).isEqualTo(false);
     }
 
