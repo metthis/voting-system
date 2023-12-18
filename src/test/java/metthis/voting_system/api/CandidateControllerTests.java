@@ -60,7 +60,7 @@ public class CandidateControllerTests {
     }
 
     @Test
-    void getResponds200AndAllCandidatesWhenTheRootIsCalled() {
+    void getResponds200AndWithAllCandidatesWhenTheRootIsCalled() {
         ResponseEntity<String> response = restTemplate
                 .getForEntity("/candidates", String.class);
 
