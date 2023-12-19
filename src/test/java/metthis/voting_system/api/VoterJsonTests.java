@@ -1,19 +1,21 @@
 package metthis.voting_system.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
+import metthis.voting_system.persons.Voter;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
-import metthis.voting_system.persons.Voter;
+import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
+// TestInstance.Lifecycle.PER_CLASS is selected to allow the use of @BeforeAll on non-static variables
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VoterJsonTests {
     @Autowired
     private JacksonTester<Voter> json;
@@ -21,17 +23,17 @@ public class VoterJsonTests {
     @Autowired
     private JacksonTester<Voter[]> jsonList;
 
-    private static Voter[] voters;
+    private Voter[] voters;
 
-    private static TestUtils testUtils;
+    private TestUtils testUtils;
 
     @BeforeAll
-    static void initTestUtils() {
+    void initTestUtils() {
         testUtils = new TestUtils();
     }
 
     @BeforeAll
-    static void initVoters() {
+    void initVoters() {
         voters = Arrays.array(
                 new Voter("John Smith", "123789", "1960-06-30", true),
                 new Voter("Jane Doe", "7878002", "1972-01-01", false));

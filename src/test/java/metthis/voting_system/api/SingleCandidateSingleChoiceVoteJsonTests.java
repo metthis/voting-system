@@ -1,20 +1,22 @@
 package metthis.voting_system.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
+import metthis.voting_system.persons.Candidate;
+import metthis.voting_system.voting.SingleCandidateSingleChoiceVote;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
-import metthis.voting_system.persons.Candidate;
-import metthis.voting_system.voting.SingleCandidateSingleChoiceVote;
+import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
+// TestInstance.Lifecycle.PER_CLASS is selected to allow the use of @BeforeAll on non-static variables
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SingleCandidateSingleChoiceVoteJsonTests {
     @Autowired
     private JacksonTester<SingleCandidateSingleChoiceVote> json;
@@ -22,19 +24,19 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     @Autowired
     private JacksonTester<SingleCandidateSingleChoiceVote[]> jsonList;
 
-    private static SingleCandidateSingleChoiceVote[] votesToSerialize;
+    private SingleCandidateSingleChoiceVote[] votesToSerialize;
 
-    private static SingleCandidateSingleChoiceVote[] votesDeserialized;
+    private SingleCandidateSingleChoiceVote[] votesDeserialized;
 
-    private static TestUtils testUtils;
+    private TestUtils testUtils;
 
     @BeforeAll
-    static void initTestUtils() {
+    void initTestUtils() {
         testUtils = new TestUtils();
     }
 
     @BeforeAll
-    static void initCandidatesAndVotes() {
+    void initCandidatesAndVotes() {
         Candidate candidateToSerialize = new Candidate("John Smith", "123789", "1960-06-30", true, "2023-12-01");
         votesToSerialize = Arrays.array(
                 new SingleCandidateSingleChoiceVote(
