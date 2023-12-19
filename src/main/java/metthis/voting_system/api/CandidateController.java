@@ -4,11 +4,10 @@ import metthis.voting_system.api.exceptions.CandidateNotFoundException;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -32,5 +31,19 @@ public class CandidateController {
     private ResponseEntity<List<Candidate>> all() {
         List<Candidate> candidates = candidateRepository.findAll();
         return ResponseEntity.ok(candidates);
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<?> putOne(@PathVariable String id,
+                                     @RequestBody Candidate suppliedCandidate,
+                                     UriComponentsBuilder ucb) {
+        Candidate savedCandidate = candidateRepository.save(suppliedCandidate);
+
+        URI locationOfNewCandidate = ucb
+                .path("candidates/{id}")
+                .buildAndExpand(savedCandidate.getId())
+                .toUri();
+
+        return ResponseEntity.created(locationOfNewCandidate).body(savedCandidate);
     }
 }
