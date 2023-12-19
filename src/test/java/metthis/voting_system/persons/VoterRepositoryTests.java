@@ -1,24 +1,26 @@
 package metthis.voting_system.persons;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.TestPropertySource;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @TestPropertySource("/test.properties")
+// TestInstance.Lifecycle.PER_CLASS is selected to allow the use of @AfterAll on a non-static repository
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VoterRepositoryTests {
     @Autowired
     private VoterRepository voterRepository;
 
-    @AfterEach
+    @BeforeEach
+    @AfterAll
     void deleteAll() {
         voterRepository.deleteAll();
     }

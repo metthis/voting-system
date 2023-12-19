@@ -1,20 +1,19 @@
 package metthis.voting_system.voting;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import metthis.voting_system.persons.Candidate;
+import metthis.voting_system.persons.CandidateRepository;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.TestPropertySource;
 
-import metthis.voting_system.persons.Candidate;
-import metthis.voting_system.persons.CandidateRepository;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestPropertySource("/test.properties")
+// TestInstance.Lifecycle.PER_CLASS is selected to allow the use of @BeforeAll on a non-static variable
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SingleCandidateSingleChoiceVoteEntityRestraintsTests {
 
     @Autowired
@@ -23,14 +22,15 @@ public class SingleCandidateSingleChoiceVoteEntityRestraintsTests {
     @Autowired
     private CandidateRepository candidateRepository;
 
-    private static Candidate candidate;
+    private Candidate candidate;
 
     @BeforeAll
-    static void initCandidate() {
+    void initCandidate() {
         candidate = new Candidate("name", "ID", "2020-01-01", true, "2022-01-01");
     }
 
-    @AfterEach
+    @BeforeEach
+    @AfterAll
     void deleteAll() {
         voteRepository.deleteAll();
         candidateRepository.deleteAll();
