@@ -2,22 +2,65 @@ package metthis.voting_system.api;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import org.junit.jupiter.api.Test;
+import metthis.voting_system.persons.Candidate;
+import metthis.voting_system.persons.CandidateRepository;
+import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 
+import java.net.URI;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = FillRepositories.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("/test.properties")
+// TestInstance.Lifecycle.PER_CLASS is selected to allow the use of @AfterAll on a non-static repository
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CandidateControllerTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private CandidateRepository candidateRepository;
+
+    private Candidate[] candidates;
+
+    @BeforeAll
+    void initCandidates() {
+        candidates = Arrays.array(
+                new Candidate("Chris Wool", "140",
+                              "1985-03-15", true, "2023-11-15"),
+                new Candidate("Mary Given", "abc789",
+                              "1991-09-09", false, "2023-11-30"),
+                new Candidate("Elizabeth Wong", "anID",
+                              "2001-11-30", true, "2023-12-05"));
+
+        candidates[1].setWithdrawalDate("2023-12-02");
+        candidates[2].setLostThisElection(true);
+    }
+
+    @BeforeEach
+    void setUpRepository() throws Exception {
+        candidateRepository.deleteAll();
+
+        for (Candidate candidate : candidates) {
+            candidateRepository.save(candidate);
+        }
+    }
+
+    @AfterAll
+    void clearRepository() {
+        candidateRepository.deleteAll();
+    }
 
     @Test
     void getResponds200AndACandidateWhenItExists() {
@@ -91,5 +134,50 @@ public class CandidateControllerTests {
 
         List<Boolean> lostThisElections = documentContext.read("$..lostThisElection");
         assertThat(lostThisElections).containsExactlyInAnyOrder(false, false, true);
+    }
+
+    @Test
+    void putResponds201AndWithANewCandidateWhenSupplyingANonexistentCandidateWithIdInBody() {
+        Candidate newCandidate = new Candidate("Tiina Glass", "newId99",
+                                               "1990-01-01", true, "2023-12-01");
+        newCandidate.setLostThisElection(true);
+        newCandidate.setWithdrawalDate("2023-12-15");
+
+        HttpEntity<Candidate> request = new HttpEntity<>(newCandidate);
+        ResponseEntity<String> createResponse = restTemplate
+                .exchange("/candidates/newId99", HttpMethod.PUT, request, String.class);
+
+        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+        URI locationOfNewCandidate = createResponse.getHeaders().getLocation();
+        ResponseEntity<String> getResponse = restTemplate
+                .getForEntity(locationOfNewCandidate, String.class);
+
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        assertThat(createResponse.getBody()).isEqualTo(getResponse.getBody());
+
+        DocumentContext documentContext = JsonPath.parse(createResponse.getBody());
+
+        String id = documentContext.read("$.id");
+        assertThat(id).isEqualTo("newId99");
+
+        String name = documentContext.read("$.name");
+        assertThat(name).isEqualTo("Tiina Glass");
+
+        String dateOfBirth = documentContext.read("$.dateOfBirth");
+        assertThat(dateOfBirth).isEqualTo("1990-01-01");
+
+        Boolean isCitizen = documentContext.read("$.isCitizen");
+        assertThat(isCitizen).isEqualTo(true);
+
+        String registrationDate = documentContext.read("$.registrationDate");
+        assertThat(registrationDate).isEqualTo("2023-12-01");
+
+        String withdrawalDate = documentContext.read("$.withdrawalDate");
+        assertThat(withdrawalDate).isEqualTo("2023-12-15");
+
+        Boolean lostThisElection = documentContext.read("$.lostThisElection");
+        assertThat(lostThisElection).isEqualTo(true);
     }
 }
