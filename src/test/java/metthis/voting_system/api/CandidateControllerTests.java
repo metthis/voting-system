@@ -188,4 +188,51 @@ public class CandidateControllerTests {
         Boolean lostThisElection = documentContext.read("$.lostThisElection");
         assertThat(lostThisElection).isEqualTo(true);
     }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"140"})
+    void putResponds204AndUpdatedTheCandidateWhenSupplyingAnAlteredExistingCandidate(String idInBody) {
+        Candidate newCandidate = new Candidate("Tris Bool",
+                                               idInBody,
+                                               "1985-03-15",
+                                               false,
+                                               "2023-11-15");
+        newCandidate.setLostThisElection(true);
+        newCandidate.setWithdrawalDate("2023-12-15");
+
+        HttpEntity<Candidate> request = new HttpEntity<>(newCandidate);
+        ResponseEntity<String> updateResponse = restTemplate
+                .exchange("/candidates/140", HttpMethod.PUT, request, String.class);
+
+        assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+        ResponseEntity<String> getResponse = restTemplate
+                .getForEntity("/candidates/140", String.class);
+
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+
+        String id = documentContext.read("$.id");
+        assertThat(id).isEqualTo("140");
+
+        String name = documentContext.read("$.name");
+        assertThat(name).isEqualTo("Tris Bool");
+
+        String dateOfBirth = documentContext.read("$.dateOfBirth");
+        assertThat(dateOfBirth).isEqualTo("1985-03-15");
+
+        Boolean isCitizen = documentContext.read("$.isCitizen");
+        assertThat(isCitizen).isEqualTo(false);
+
+        String registrationDate = documentContext.read("$.registrationDate");
+        assertThat(registrationDate).isEqualTo("2023-11-15");
+
+        String withdrawalDate = documentContext.read("$.withdrawalDate");
+        assertThat(withdrawalDate).isEqualTo("2023-12-15");
+
+        Boolean lostThisElection = documentContext.read("$.lostThisElection");
+        assertThat(lostThisElection).isEqualTo(true);
+    }
 }
