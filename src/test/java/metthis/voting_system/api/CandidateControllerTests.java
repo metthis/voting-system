@@ -6,6 +6,9 @@ import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRepository;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -136,10 +139,15 @@ public class CandidateControllerTests {
         assertThat(lostThisElections).containsExactlyInAnyOrder(false, false, true);
     }
 
-    @Test
-    void putResponds201AndWithANewCandidateWhenSupplyingANonexistentCandidateWithIdInBody() {
-        Candidate newCandidate = new Candidate("Tiina Glass", "newId99",
-                                               "1990-01-01", true, "2023-12-01");
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"newId99"})
+    void putResponds201AndWithANewCandidateWhenSupplyingANonexistentCandidate(String idInBody) {
+        Candidate newCandidate = new Candidate("Tiina Glass",
+                                               idInBody,
+                                               "1990-01-01",
+                                               true,
+                                               "2023-12-01");
         newCandidate.setLostThisElection(true);
         newCandidate.setWithdrawalDate("2023-12-15");
 
