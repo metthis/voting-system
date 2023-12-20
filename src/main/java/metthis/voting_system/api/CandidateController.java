@@ -38,13 +38,12 @@ public class CandidateController {
                                      @RequestBody Candidate suppliedCandidate,
                                      UriComponentsBuilder ucb) {
         Candidate candidateToSave = getCandidateWithIdIfMissing(suppliedCandidate, id);
+        boolean candidateAlreadyExisted = candidateRepository.existsById(id);
+        Candidate savedCandidate = candidateRepository.save(candidateToSave);
 
-        if (candidateRepository.existsById(id)) {
-            Candidate savedCandidate = candidateRepository.save(candidateToSave);
+        if (candidateAlreadyExisted) {
             return ResponseEntity.noContent().build();
         }
-
-        Candidate savedCandidate = candidateRepository.save(candidateToSave);
 
         URI locationOfNewCandidate = ucb
                 .path("candidates/{id}")
