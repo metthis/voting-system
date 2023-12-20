@@ -4,6 +4,7 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRepository;
+import metthis.voting_system.persons.Voter;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -193,15 +194,15 @@ public class CandidateControllerTests {
     @NullSource
     @ValueSource(strings = {"140"})
     void putResponds204AndUpdatedTheCandidateWhenSupplyingAnAlteredExistingCandidate(String idInBody) {
-        Candidate newCandidate = new Candidate("Tris Bool",
+        Candidate updatedCandidate = new Candidate("Tris Bool",
                                                idInBody,
                                                "1985-03-15",
                                                false,
                                                "2023-11-15");
-        newCandidate.setLostThisElection(true);
-        newCandidate.setWithdrawalDate("2023-12-15");
+        updatedCandidate.setLostThisElection(true);
+        updatedCandidate.setWithdrawalDate("2023-12-15");
 
-        HttpEntity<Candidate> request = new HttpEntity<>(newCandidate);
+        HttpEntity<Candidate> request = new HttpEntity<>(updatedCandidate);
         ResponseEntity<String> updateResponse = restTemplate
                 .exchange("/candidates/140", HttpMethod.PUT, request, String.class);
 
@@ -234,5 +235,19 @@ public class CandidateControllerTests {
 
         Boolean lostThisElection = documentContext.read("$.lostThisElection");
         assertThat(lostThisElection).isEqualTo(true);
+    }
+
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"140, newId99"})
+    void putResponds404WhenSupplyingSomethingElseThanACandidate(String idInBody) {
+        Voter voter = new Voter("Tris Bool", idInBody, "1985-03-15", false);
+
+        HttpEntity<Voter> request = new HttpEntity<>(voter);
+        ResponseEntity<String> updateResponse = restTemplate
+                .exchange("/candidates/140", HttpMethod.PUT, request, String.class);
+
+        assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 }
