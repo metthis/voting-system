@@ -39,6 +39,11 @@ public class CandidateController {
                                      UriComponentsBuilder ucb) {
         Candidate candidateToSave = getCandidateWithIdIfMissing(suppliedCandidate, id);
 
+        if (candidateRepository.existsById(id)) {
+            Candidate savedCandidate = candidateRepository.save(candidateToSave);
+            return ResponseEntity.noContent().build();
+        }
+
         Candidate savedCandidate = candidateRepository.save(candidateToSave);
 
         URI locationOfNewCandidate = ucb
