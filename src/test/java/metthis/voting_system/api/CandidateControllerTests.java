@@ -52,7 +52,7 @@ public class CandidateControllerTests {
     }
 
     @BeforeEach
-    void setUpRepository() throws Exception {
+    void setUpRepository() {
         candidateRepository.deleteAll();
 
         for (Candidate candidate : candidates) {
