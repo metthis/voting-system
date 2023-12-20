@@ -37,7 +37,9 @@ public class CandidateController {
     private ResponseEntity<?> putOne(@PathVariable String id,
                                      @RequestBody Candidate suppliedCandidate,
                                      UriComponentsBuilder ucb) {
-        Candidate savedCandidate = candidateRepository.save(suppliedCandidate);
+        Candidate candidateToSave = getCandidateWithIdIfMissing(suppliedCandidate, id);
+
+        Candidate savedCandidate = candidateRepository.save(candidateToSave);
 
         URI locationOfNewCandidate = ucb
                 .path("candidates/{id}")
@@ -45,5 +47,22 @@ public class CandidateController {
                 .toUri();
 
         return ResponseEntity.created(locationOfNewCandidate).body(savedCandidate);
+    }
+
+    private static Candidate getCandidateWithIdIfMissing(Candidate suppliedCandidate, String id) {
+        if (suppliedCandidate.getId() != null) {
+            return suppliedCandidate;
+        }
+
+        Candidate candidateToSave = new Candidate(suppliedCandidate.getName(),
+                                        id,
+                                        suppliedCandidate.getDateOfBirth().toString(),
+                                        suppliedCandidate.getIsCitizen(),
+                                        suppliedCandidate.getRegistrationDate().toString());
+
+        candidateToSave.setWithdrawalDate(suppliedCandidate.getWithdrawalDate().toString());
+        candidateToSave.setLostThisElection(suppliedCandidate.getLostThisElection());
+
+        return candidateToSave;
     }
 }
