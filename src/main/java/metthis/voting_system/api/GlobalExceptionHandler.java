@@ -1,6 +1,5 @@
 package metthis.voting_system.api;
 
-import metthis.voting_system.api.exceptions.CandidateNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler(CandidateNotFoundException.class)
+    @ExceptionHandler()
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String candidateNotFoundHandler(CandidateNotFoundException ex) {
+    String exceptionHandler(RuntimeException ex) {
         return ex.getMessage();
     }
 }
