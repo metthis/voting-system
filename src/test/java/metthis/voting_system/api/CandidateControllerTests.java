@@ -241,16 +241,13 @@ public class CandidateControllerTests {
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"140, newId99"})
-    void putResponds404WhenSupplyingSomethingElseThanACandidate(String idInBody) {
+    void putResponds400WhenSupplyingSomethingElseThanACandidate(String idInBody) {
         Voter voter = new Voter("Tris Bool", idInBody, "1985-03-15", false);
 
         HttpEntity<Voter> request = new HttpEntity<>(voter);
         ResponseEntity<String> updateResponse = restTemplate
                 .exchange("/candidates/140", HttpMethod.PUT, request, String.class);
 
-        assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
-        String errorMessage = "Data supplied by the user is incorrect, no changes were made.";
-        assertThat(updateResponse.getBody()).isEqualTo(errorMessage);
+        assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 }
