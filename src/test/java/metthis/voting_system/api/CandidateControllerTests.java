@@ -249,5 +249,8 @@ public class CandidateControllerTests {
                 .exchange("/candidates/140", HttpMethod.PUT, request, String.class);
 
         assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+        String errorMessage = "Data supplied by the user is incorrect, no changes were made.";
+        assertThat(updateResponse.getBody()).isEqualTo(errorMessage);
     }
 }
