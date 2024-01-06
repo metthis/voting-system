@@ -22,14 +22,14 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Candidate> one(@PathVariable String id) {
+    private ResponseEntity<Candidate> getOne(@PathVariable String id) {
         Candidate candidate = candidateRepository.findById(id)
                 .orElseThrow(() -> new CandidateNotFoundException(id));
         return ResponseEntity.ok(candidate);
     }
 
     @GetMapping
-    private ResponseEntity<List<Candidate>> all() {
+    private ResponseEntity<List<Candidate>> getAll() {
         List<Candidate> candidates = candidateRepository.findAll();
         return ResponseEntity.ok(candidates);
     }
