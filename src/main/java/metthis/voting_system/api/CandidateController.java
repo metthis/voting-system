@@ -70,4 +70,14 @@ public class CandidateController {
 
         return candidateToSave;
     }
+
+    @PatchMapping("/{id}")
+    private ResponseEntity<?> patchOne(@PathVariable String id,
+                                       @RequestBody Candidate updateData) {
+        Candidate candidate = candidateRepository.findById(id).get();
+        candidate.setWithdrawalDate(updateData.getWithdrawalDate().toString());
+        Candidate savedCandidate = candidateRepository.save(candidate);
+
+        return ResponseEntity.ok(savedCandidate);
+    }
 }
