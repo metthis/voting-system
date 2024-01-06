@@ -78,7 +78,8 @@ public class CandidateController {
     @PatchMapping("/{id}")
     private ResponseEntity<?> patchOne(@PathVariable String id,
                                        @RequestBody Candidate updateData) {
-        Candidate candidate = candidateRepository.findById(id).get();
+        Candidate candidate = candidateRepository.findById(id)
+                .orElseThrow(() -> new CandidateNotFoundException(id));
 
         if (updateData.getWithdrawalDate() != null) {
             candidate.setWithdrawalDate(updateData.getWithdrawalDate().toString());
