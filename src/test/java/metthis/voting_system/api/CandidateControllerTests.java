@@ -242,10 +242,8 @@ public class CandidateControllerTests {
     }
 
 
-    @ParameterizedTest
-    @NullSource
-    @ValueSource(strings = {"140, newId99"})
-    void putResponds400WhenSupplyingInvalidCandidateData(String idInBody) throws IOException {
+    @Test
+    void putResponds400WhenSupplyingInvalidCandidateData() throws IOException {
         String invalidCandidate = testUtils.fileToString("invalidCandidate.json");
 
         HttpHeaders headers = new HttpHeaders();
