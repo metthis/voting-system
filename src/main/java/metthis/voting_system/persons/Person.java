@@ -1,13 +1,10 @@
 package metthis.voting_system.persons;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -16,12 +13,15 @@ public abstract class Person implements Comparable<Person> {
     @Column(nullable = false)
     protected String id;
 
+    @NotNull
     @Column(nullable = false)
     protected String name;
 
+    @NotNull
     @Column(nullable = false)
     protected LocalDate dateOfBirth;
 
+    @NotNull
     @Column(nullable = false)
     protected Boolean isCitizen;
 

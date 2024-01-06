@@ -1,18 +1,21 @@
 package metthis.voting_system.persons;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 @Entity
 public class Candidate extends Person {
 
+    @NotNull
     @Column(nullable = false)
     private LocalDate registrationDate;
 
     private LocalDate withdrawalDate = null;
 
+    @NotNull
     @Column(nullable = false)
     private Boolean lostThisElection = false;
 
