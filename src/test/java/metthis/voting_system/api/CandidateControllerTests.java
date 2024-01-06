@@ -7,6 +7,7 @@ import metthis.voting_system.persons.CandidateRepository;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -256,12 +257,21 @@ public class CandidateControllerTests {
         assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    @Test
-    void patchResponds200AndWithUpdatedCandidateWhenAnExistingCandidateIsSuccessfullyWithdrawn() {
-        Candidate withdrawalData = new Candidate();
-        withdrawalData.setWithdrawalDate("2023-12-30");
+    @ParameterizedTest
+    @CsvSource(nullValues = "NULL", textBlock = """
+            2023-12-30,         NULL
+            NULL,               true
+            2023-12-30,         true
+            """)
+    void patchResponds200AndWithUpdatedCandidateWhenAnExistingCandidateIsSuccessfullyUpdatedWithWithdrawalDateOrLostThisElectionOrBoth(
+            String newWithdrawalDate,
+            Boolean newLostThisElection
+    ) {
+        Candidate updateData = new Candidate();
+        updateData.setWithdrawalDate(newWithdrawalDate);
+        updateData.setLostThisElection(newLostThisElection);
 
-        HttpEntity<Candidate> request = new HttpEntity<>(withdrawalData);
+        HttpEntity<Candidate> request = new HttpEntity<>(updateData);
         ResponseEntity<String> patchResponse = restTemplate
                 .exchange("/candidates/140", HttpMethod.PATCH, request, String.class);
 
@@ -292,9 +302,9 @@ public class CandidateControllerTests {
         assertThat(registrationDate).isEqualTo("2023-11-15");
 
         String withdrawalDate = documentContext.read("$.withdrawalDate");
-        assertThat(withdrawalDate).isEqualTo("2023-12-30");
+        assertThat(withdrawalDate).isEqualTo(newWithdrawalDate);
 
         Boolean lostThisElection = documentContext.read("$.lostThisElection");
-        assertThat(lostThisElection).isEqualTo(false);
+        assertThat(lostThisElection).isEqualTo(newLostThisElection == null ? false : newLostThisElection);
     }
 }
