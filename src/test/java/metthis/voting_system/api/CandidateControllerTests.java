@@ -399,4 +399,17 @@ public class CandidateControllerTests {
         Boolean lostThisElection = documentContext.read("$.lostThisElection");
         assertThat(lostThisElection).isEqualTo(false);
     }
+
+    @Test
+    void patchResponds404WhenAttemptingToUpdateANonexistentCandidate() {
+        Candidate updateData = new Candidate();
+        updateData.setWithdrawalDate("2023-12-30");
+
+        HttpEntity<Candidate> request = new HttpEntity<>(updateData);
+        ResponseEntity<String> updateResponse = restTemplate
+                .exchange("/candidates/9999", HttpMethod.PATCH, request, String.class);
+
+        assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(updateResponse.getBody()).isEqualTo("Could not find candidate 9999");
+    }
 }
