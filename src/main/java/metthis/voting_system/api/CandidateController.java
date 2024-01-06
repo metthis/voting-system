@@ -1,5 +1,6 @@
 package metthis.voting_system.api;
 
+import jakarta.validation.Valid;
 import metthis.voting_system.api.exceptions.CandidateNotFoundException;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRepository;
@@ -35,7 +36,7 @@ public class CandidateController {
 
     @PutMapping("/{id}")
     private ResponseEntity<?> putOne(@PathVariable String id,
-                                     @RequestBody Candidate suppliedCandidate,
+                                     @Valid @RequestBody Candidate suppliedCandidate,
                                      UriComponentsBuilder ucb) {
         Candidate candidateToSave = getCandidateWithIdIfMissing(suppliedCandidate, id);
         boolean candidateAlreadyExisted = candidateRepository.existsById(id);
