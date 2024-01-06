@@ -2,10 +2,12 @@ package metthis.voting_system.persons;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Voter extends Person {
 
+    @NotNull
     @Column(nullable = false)
     private Integer lastVotedRound = 0;
 
