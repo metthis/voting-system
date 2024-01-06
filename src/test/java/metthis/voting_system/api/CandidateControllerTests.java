@@ -355,4 +355,48 @@ public class CandidateControllerTests {
         Boolean lostThisElection = documentContext.read("$.lostThisElection");
         assertThat(lostThisElection).isEqualTo(newLostThisElection);
     }
+
+    @Test
+    void patchIgnoresFieldsWhichDoNotCorrespondToCandidateFields() throws IOException {
+        String invalidUpdate = testUtils.fileToString("invalidUpdate.json");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+
+        HttpEntity<String> request = new HttpEntity<>(invalidUpdate, headers);
+        ResponseEntity<String> patchResponse = restTemplate
+                .exchange("/candidates/140", HttpMethod.PATCH, request, String.class);
+
+        assertThat(patchResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        ResponseEntity<String> getResponse = restTemplate
+                .getForEntity("/candidates/140", String.class);
+
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        assertThat(patchResponse.getBody()).isEqualTo(getResponse.getBody());
+
+        DocumentContext documentContext = JsonPath.parse(patchResponse.getBody());
+
+        String id = documentContext.read("$.id");
+        assertThat(id).isEqualTo("140");
+
+        String name = documentContext.read("$.name");
+        assertThat(name).isEqualTo("Chris Wool");
+
+        String dateOfBirth = documentContext.read("$.dateOfBirth");
+        assertThat(dateOfBirth).isEqualTo("1985-03-15");
+
+        Boolean isCitizen = documentContext.read("$.isCitizen");
+        assertThat(isCitizen).isEqualTo(true);
+
+        String registrationDate = documentContext.read("$.registrationDate");
+        assertThat(registrationDate).isEqualTo("2023-11-15");
+
+        String withdrawalDate = documentContext.read("$.withdrawalDate");
+        assertThat(withdrawalDate).isEqualTo(null);
+
+        Boolean lostThisElection = documentContext.read("$.lostThisElection");
+        assertThat(lostThisElection).isEqualTo(false);
+    }
 }
