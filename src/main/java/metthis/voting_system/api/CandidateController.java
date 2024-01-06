@@ -74,6 +74,7 @@ public class CandidateController {
     // Supports updates of withdrawalDate and lostThisElection.
     // Doesn't support setting these fields to null (in such a case the field in question isn't updated).
     // Other fields are ignored.
+    // Fields which don't correspond to Candidate fields are also ignored.
     @PatchMapping("/{id}")
     private ResponseEntity<?> patchOne(@PathVariable String id,
                                        @RequestBody Candidate updateData) {
