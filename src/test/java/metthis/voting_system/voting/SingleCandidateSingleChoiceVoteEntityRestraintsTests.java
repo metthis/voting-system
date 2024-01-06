@@ -5,8 +5,8 @@ import metthis.voting_system.persons.CandidateRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.TransactionSystemException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,9 +38,12 @@ public class SingleCandidateSingleChoiceVoteEntityRestraintsTests {
 
     @Test
     void votingRoundCannotBeNull() {
+        // The candidate has to be saved so that it can be used as a choice in a vote
+        candidateRepository.save(candidate);
+
         Vote vote = new SingleCandidateSingleChoiceVote(
                 null, candidate);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             voteRepository.save(vote);
         });
     }
