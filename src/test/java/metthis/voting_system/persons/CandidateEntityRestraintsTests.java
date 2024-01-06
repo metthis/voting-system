@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.TransactionSystemException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,7 +30,7 @@ public class CandidateEntityRestraintsTests {
     @Test
     void nameCannotBeNull() {
         Candidate candidate = new Candidate(null, "ID", "2020-01-01", true, "2022-01-01");
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             candidateRepository.save(candidate);
         });
     }
@@ -46,7 +46,7 @@ public class CandidateEntityRestraintsTests {
     @Test
     void dateOfBirthCannotBeNull() {
         Candidate candidate = new Candidate("name", "ID", null, true, "2022-01-01");
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             candidateRepository.save(candidate);
         });
     }
@@ -54,7 +54,7 @@ public class CandidateEntityRestraintsTests {
     @Test
     void isCitizenCannotBeNull() {
         Candidate candidate = new Candidate("name", "ID", "2020-01-01", null, "2022-01-01");
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             candidateRepository.save(candidate);
         });
     }
@@ -64,7 +64,7 @@ public class CandidateEntityRestraintsTests {
     @Test
     void registrationDateCannotBeNull() {
         Candidate candidate = new Candidate("name", "ID", "2020-01-01", true, null);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             candidateRepository.save(candidate);
         });
     }
@@ -80,7 +80,7 @@ public class CandidateEntityRestraintsTests {
     void lostThisElectionCannotBeNull() {
         Candidate candidate = new Candidate("name", "ID", "2020-01-01", true, "2022-01-01");
         candidate.setLostThisElection(null);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             candidateRepository.save(candidate);
         });
     }

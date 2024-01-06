@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.TransactionSystemException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,7 +30,7 @@ public class VoterEntityRestraintsTests {
     @Test
     void nameCannotBeNull() {
         Voter voter = new Voter(null, "ID", "2020-01-01", true);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             voterRepository.save(voter);
         });
     }
@@ -46,7 +46,7 @@ public class VoterEntityRestraintsTests {
     @Test
     void dateOfBirthCannotBeNull() {
         Voter voter = new Voter("name", "ID", null, true);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             voterRepository.save(voter);
         });
     }
@@ -54,7 +54,7 @@ public class VoterEntityRestraintsTests {
     @Test
     void isCitizenCannotBeNull() {
         Voter voter = new Voter("name", "ID", "2020-01-01", null);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             voterRepository.save(voter);
         });
     }
@@ -65,7 +65,7 @@ public class VoterEntityRestraintsTests {
     void lastVotedRoundCannotBeNull() {
         Voter voter = new Voter("name", "ID", "2020-01-01", true);
         voter.setLastVotedRound(null);
-        assertThrows(DataIntegrityViolationException.class, () -> {
+        assertThrows(TransactionSystemException.class, () -> {
             voterRepository.save(voter);
         });
     }
