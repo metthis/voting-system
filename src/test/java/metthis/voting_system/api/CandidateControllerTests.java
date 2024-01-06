@@ -4,7 +4,6 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRepository;
-import metthis.voting_system.persons.Voter;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,12 +12,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -37,6 +34,13 @@ public class CandidateControllerTests {
     private CandidateRepository candidateRepository;
 
     private Candidate[] candidates;
+
+    private TestUtils testUtils;
+
+    @BeforeAll
+    void initTestUtils() {
+        testUtils = new TestUtils();
+    }
 
     @BeforeAll
     void initCandidates() {
@@ -241,10 +245,13 @@ public class CandidateControllerTests {
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"140, newId99"})
-    void putResponds400WhenSupplyingVoterInsteadOfCandidate(String idInBody) {
-        Voter voter = new Voter("Tris Bool", idInBody, "1985-03-15", false);
+    void putResponds400WhenSupplyingInvalidCandidateData(String idInBody) throws IOException {
+        String invalidCandidate = testUtils.fileToString("invalidCandidate.json");
 
-        HttpEntity<Voter> request = new HttpEntity<>(voter);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+
+        HttpEntity<String> request = new HttpEntity<>(invalidCandidate, headers);
         ResponseEntity<String> updateResponse = restTemplate
                 .exchange("/candidates/140", HttpMethod.PUT, request, String.class);
 
