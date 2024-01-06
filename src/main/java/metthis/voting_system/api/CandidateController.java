@@ -71,13 +71,22 @@ public class CandidateController {
         return candidateToSave;
     }
 
+    // Supports updates of withdrawalDate and lostThisElection.
+    // Doesn't support setting these fields to null (in such a case the field in question isn't updated).
+    // Other fields are ignored.
     @PatchMapping("/{id}")
     private ResponseEntity<?> patchOne(@PathVariable String id,
                                        @RequestBody Candidate updateData) {
         Candidate candidate = candidateRepository.findById(id).get();
-        candidate.setWithdrawalDate(updateData.getWithdrawalDate().toString());
-        Candidate savedCandidate = candidateRepository.save(candidate);
 
+        if (updateData.getWithdrawalDate() != null) {
+            candidate.setWithdrawalDate(updateData.getWithdrawalDate().toString());
+        }
+        if (updateData.getLostThisElection() != null) {
+            candidate.setLostThisElection(updateData.getLostThisElection());
+        }
+
+        Candidate savedCandidate = candidateRepository.save(candidate);
         return ResponseEntity.ok(savedCandidate);
     }
 }
