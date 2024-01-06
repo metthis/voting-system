@@ -241,7 +241,7 @@ public class CandidateControllerTests {
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"140, newId99"})
-    void putResponds400WhenSupplyingSomethingElseThanACandidate(String idInBody) {
+    void putResponds400WhenSupplyingVoterInsteadOfCandidate(String idInBody) {
         Voter voter = new Voter("Tris Bool", idInBody, "1985-03-15", false);
 
         HttpEntity<Voter> request = new HttpEntity<>(voter);
