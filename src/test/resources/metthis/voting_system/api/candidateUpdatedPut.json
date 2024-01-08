@@ -1,0 +1,9 @@
+{
+    "name": "Tris Bool",
+    "id": "140",
+    "dateOfBirth": "1985-03-15",
+    "isCitizen": false,
+    "registrationDate": "2023-11-15",
+    "withdrawalDate": "2023-12-15",
+    "lostThisElection": true
+}

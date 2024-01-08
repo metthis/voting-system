@@ -57,12 +57,12 @@ public class CandidateJsonTests {
 
     @Test
     void candidateListIsSerializedCorrectly() throws IOException {
-        assertThat(jsonList.write(candidates)).isStrictlyEqualToJson("candidateList.json");
+        assertThat(jsonList.write(candidates)).isStrictlyEqualToJson("candidateList1.json");
     }
 
     @Test
     void candidateListIsDesirializedCorrectly() throws IOException {
-        byte[] actualBytes = testUtils.fileToBytes("candidateList.json");
+        byte[] actualBytes = testUtils.fileToBytes("candidateList1.json");
         assertThat(jsonList.parse(actualBytes))
                 .usingRecursiveComparison()
                 .isEqualTo(candidates);

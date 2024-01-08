@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Chris Wool",
+        "id": "140",
+        "dateOfBirth": "1985-03-15",
+        "isCitizen": true,
+        "registrationDate": "2023-11-15",
+        "withdrawalDate": null,
+        "lostThisElection": false
+    },
+    {
+        "name": "Mary Given",
+        "id": "abc789",
+        "dateOfBirth": "1991-09-09",
+        "isCitizen": false,
+        "registrationDate": "2023-11-30",
+        "withdrawalDate": "2023-12-02",
+        "lostThisElection": false
+    },
+    {
+        "name": "Elizabeth Wong",
+        "id": "anID",
+        "dateOfBirth": "2001-11-30",
+        "isCitizen": true,
+        "registrationDate": "2023-12-05",
+        "withdrawalDate": null,
+        "lostThisElection": true
+    }
+]

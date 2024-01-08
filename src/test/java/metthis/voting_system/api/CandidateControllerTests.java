@@ -5,11 +5,13 @@ import com.jayway.jsonpath.JsonPath;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRepository;
 import org.assertj.core.util.Arrays;
+import org.json.JSONException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,7 +20,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,83 +73,41 @@ public class CandidateControllerTests {
     }
 
     @Test
-    void getResponds200AndACandidateWhenItExists() {
+    void getResponds200AndACandidateWhenItExists() throws IOException, JSONException {
         ResponseEntity<String> response = restTemplate
                 .getForEntity("/candidates/140", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        DocumentContext documentContext = JsonPath.parse(response.getBody());
-
-        String id = documentContext.read("$.id");
-        assertThat(id).isEqualTo("140");
-
-        String name = documentContext.read("$.name");
-        assertThat(name).isEqualTo("Chris Wool");
-
-        String dateOfBirth = documentContext.read("$.dateOfBirth");
-        assertThat(dateOfBirth).isEqualTo("1985-03-15");
-
-        Boolean isCitizen = documentContext.read("$.isCitizen");
-        assertThat(isCitizen).isEqualTo(true);
-
-        String registrationDate = documentContext.read("$.registrationDate");
-        assertThat(registrationDate).isEqualTo("2023-11-15");
-
-        String withdrawalDate = documentContext.read("$.withdrawalDate");
-        assertThat(withdrawalDate).isEqualTo(null);
-
-        Boolean lostThisElection = documentContext.read("$.lostThisElection");
-        assertThat(lostThisElection).isEqualTo(false);
+        String expectedJson = testUtils.fileToString("candidate1.json");
+        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
     }
 
     @Test
     void getResponds404WhenCandidateDoesNotExist() {
         ResponseEntity<String> response = restTemplate
-                .getForEntity("/candidates/999", String.class);
+                .getForEntity("/candidates/9999", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(response.getBody()).isEqualTo("Could not find candidate 999");
+        assertThat(response.getBody()).isEqualTo("Could not find candidate 9999");
     }
 
     @Test
-    void getResponds200AndWithAllCandidatesWhenTheRootIsCalled() {
+    void getResponds200AndWithAllCandidatesWhenTheRootIsCalled() throws  IOException, JSONException {
         ResponseEntity<String> response = restTemplate
                 .getForEntity("/candidates", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        DocumentContext documentContext = JsonPath.parse(response.getBody());
-
-        int candidateCount = documentContext.read("$.length()");
-        assertThat(candidateCount).isEqualTo(3);
-
-        List<String> ids = documentContext.read("$..id");
-        assertThat(ids).containsExactlyInAnyOrder("140", "abc789", "anID");
-
-        List<String> names = documentContext.read("$..name");
-        assertThat(names).containsExactlyInAnyOrder("Chris Wool", "Mary Given", "Elizabeth Wong");
-
-        List<String> datesOfBirth = documentContext.read("$..dateOfBirth");
-        assertThat(datesOfBirth).containsExactlyInAnyOrder("1985-03-15", "1991-09-09", "2001-11-30");
-
-        List<Boolean> isCitizens = documentContext.read("$..isCitizen");
-        assertThat(isCitizens).containsExactlyInAnyOrder(true, false, true);
-
-        List<String> registrationDates = documentContext.read("$..registrationDate");
-        assertThat(registrationDates).containsExactlyInAnyOrder("2023-11-15", "2023-11-30", "2023-12-05");
-
-        List<String> withdrawalDates = documentContext.read("$..withdrawalDate");
-        assertThat(withdrawalDates).containsExactlyInAnyOrder(null, "2023-12-02", null);
-
-        List<Boolean> lostThisElections = documentContext.read("$..lostThisElection");
-        assertThat(lostThisElections).containsExactlyInAnyOrder(false, false, true);
+        String expectedJson = testUtils.fileToString("candidateList2.json");
+        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
     }
 
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"newId99"})
-    void putResponds201AndWithANewCandidateWhenSupplyingANonexistentCandidate(String idInBody) {
+    void putResponds201AndWithANewCandidateWhenSupplyingANonexistentCandidate(String idInBody)
+            throws IOException, JSONException {
         Candidate newCandidate = new Candidate("Tiina Glass",
                                                idInBody,
                                                "1990-01-01",
@@ -171,34 +130,15 @@ public class CandidateControllerTests {
 
         assertThat(createResponse.getBody()).isEqualTo(getResponse.getBody());
 
-        DocumentContext documentContext = JsonPath.parse(createResponse.getBody());
-
-        String id = documentContext.read("$.id");
-        assertThat(id).isEqualTo("newId99");
-
-        String name = documentContext.read("$.name");
-        assertThat(name).isEqualTo("Tiina Glass");
-
-        String dateOfBirth = documentContext.read("$.dateOfBirth");
-        assertThat(dateOfBirth).isEqualTo("1990-01-01");
-
-        Boolean isCitizen = documentContext.read("$.isCitizen");
-        assertThat(isCitizen).isEqualTo(true);
-
-        String registrationDate = documentContext.read("$.registrationDate");
-        assertThat(registrationDate).isEqualTo("2023-12-01");
-
-        String withdrawalDate = documentContext.read("$.withdrawalDate");
-        assertThat(withdrawalDate).isEqualTo("2023-12-15");
-
-        Boolean lostThisElection = documentContext.read("$.lostThisElection");
-        assertThat(lostThisElection).isEqualTo(true);
+        String expectedJson = testUtils.fileToString("candidateNew.json");
+        JSONAssert.assertEquals(expectedJson, createResponse.getBody(), true);
     }
 
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"140"})
-    void putResponds204AndUpdatedTheCandidateWhenSupplyingAnAlteredExistingCandidate(String idInBody) {
+    void putResponds204AndUpdatedTheCandidateWhenSupplyingAnAlteredExistingCandidate(String idInBody)
+            throws IOException, JSONException {
         Candidate updatedCandidate = new Candidate("Tris Bool",
                                                idInBody,
                                                "1985-03-15",
@@ -218,34 +158,14 @@ public class CandidateControllerTests {
 
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
-
-        String id = documentContext.read("$.id");
-        assertThat(id).isEqualTo("140");
-
-        String name = documentContext.read("$.name");
-        assertThat(name).isEqualTo("Tris Bool");
-
-        String dateOfBirth = documentContext.read("$.dateOfBirth");
-        assertThat(dateOfBirth).isEqualTo("1985-03-15");
-
-        Boolean isCitizen = documentContext.read("$.isCitizen");
-        assertThat(isCitizen).isEqualTo(false);
-
-        String registrationDate = documentContext.read("$.registrationDate");
-        assertThat(registrationDate).isEqualTo("2023-11-15");
-
-        String withdrawalDate = documentContext.read("$.withdrawalDate");
-        assertThat(withdrawalDate).isEqualTo("2023-12-15");
-
-        Boolean lostThisElection = documentContext.read("$.lostThisElection");
-        assertThat(lostThisElection).isEqualTo(true);
+        String expectedJson = testUtils.fileToString("candidateUpdatedPut.json");
+        JSONAssert.assertEquals(expectedJson, getResponse.getBody(), true);
     }
 
 
     @Test
     void putResponds400WhenSupplyingInvalidCandidateData() throws IOException {
-        String invalidCandidate = testUtils.fileToString("invalidCandidate.json");
+        String invalidCandidate = testUtils.fileToString("candidateInvalid.json");
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -266,7 +186,7 @@ public class CandidateControllerTests {
     void patchResponds200AndWithUpdatedCandidateWhenAnExistingCandidateIsSuccessfullyUpdatedWithWithdrawalDateOrLostThisElectionOrBoth(
             String newWithdrawalDate,
             Boolean newLostThisElection
-    ) {
+    ) throws IOException, JSONException {
         Candidate updateData = new Candidate();
         updateData.setWithdrawalDate(newWithdrawalDate);
         updateData.setLostThisElection(newLostThisElection);
@@ -284,22 +204,12 @@ public class CandidateControllerTests {
 
         assertThat(patchResponse.getBody()).isEqualTo(getResponse.getBody());
 
-        DocumentContext documentContext = JsonPath.parse(patchResponse.getBody());
+        String expectedSubsetJson = testUtils.fileToString("candidateUpdatedPatchPartial.json");
+        String actualJson = patchResponse.getBody();
 
-        String id = documentContext.read("$.id");
-        assertThat(id).isEqualTo("140");
+        JSONAssert.assertEquals(expectedSubsetJson, actualJson, false);
 
-        String name = documentContext.read("$.name");
-        assertThat(name).isEqualTo("Chris Wool");
-
-        String dateOfBirth = documentContext.read("$.dateOfBirth");
-        assertThat(dateOfBirth).isEqualTo("1985-03-15");
-
-        Boolean isCitizen = documentContext.read("$.isCitizen");
-        assertThat(isCitizen).isEqualTo(true);
-
-        String registrationDate = documentContext.read("$.registrationDate");
-        assertThat(registrationDate).isEqualTo("2023-11-15");
+        DocumentContext documentContext = JsonPath.parse(actualJson);
 
         String withdrawalDate = documentContext.read("$.withdrawalDate");
         assertThat(withdrawalDate).isEqualTo(newWithdrawalDate);
@@ -309,15 +219,12 @@ public class CandidateControllerTests {
     }
 
     @Test
-    void patchIgnoresAllUpdateFieldsOtherThanWithdrawalDateAndLostThisElection() {
+    void patchIgnoresAllUpdateFieldsOtherThanWithdrawalDateAndLostThisElection() throws IOException, JSONException {
         Candidate updateData = new Candidate("newName", "newId", "1800-01-01",
                                              false, "2020-01-01");
 
-        String newWithdrawalDate = "2023-12-30";
-        Boolean newLostThisElection = true;
-
-        updateData.setWithdrawalDate(newWithdrawalDate);
-        updateData.setLostThisElection(newLostThisElection);
+        updateData.setWithdrawalDate("2023-12-30");
+        updateData.setLostThisElection(true);
 
         HttpEntity<Candidate> request = new HttpEntity<>(updateData);
         ResponseEntity<String> patchResponse = restTemplate
@@ -332,32 +239,12 @@ public class CandidateControllerTests {
 
         assertThat(patchResponse.getBody()).isEqualTo(getResponse.getBody());
 
-        DocumentContext documentContext = JsonPath.parse(patchResponse.getBody());
-
-        String id = documentContext.read("$.id");
-        assertThat(id).isEqualTo("140");
-
-        String name = documentContext.read("$.name");
-        assertThat(name).isEqualTo("Chris Wool");
-
-        String dateOfBirth = documentContext.read("$.dateOfBirth");
-        assertThat(dateOfBirth).isEqualTo("1985-03-15");
-
-        Boolean isCitizen = documentContext.read("$.isCitizen");
-        assertThat(isCitizen).isEqualTo(true);
-
-        String registrationDate = documentContext.read("$.registrationDate");
-        assertThat(registrationDate).isEqualTo("2023-11-15");
-
-        String withdrawalDate = documentContext.read("$.withdrawalDate");
-        assertThat(withdrawalDate).isEqualTo(newWithdrawalDate);
-
-        Boolean lostThisElection = documentContext.read("$.lostThisElection");
-        assertThat(lostThisElection).isEqualTo(newLostThisElection);
+        String expectedJson = testUtils.fileToString("candidateUpdatedPatchFull.json");
+        JSONAssert.assertEquals(expectedJson, patchResponse.getBody(), true);
     }
 
     @Test
-    void patchIgnoresFieldsWhichDoNotCorrespondToCandidateFields() throws IOException {
+    void patchIgnoresFieldsWhichDoNotCorrespondToCandidateFields() throws IOException, JSONException {
         String invalidUpdate = testUtils.fileToString("invalidUpdate.json");
 
         HttpHeaders headers = new HttpHeaders();
@@ -376,28 +263,8 @@ public class CandidateControllerTests {
 
         assertThat(patchResponse.getBody()).isEqualTo(getResponse.getBody());
 
-        DocumentContext documentContext = JsonPath.parse(patchResponse.getBody());
-
-        String id = documentContext.read("$.id");
-        assertThat(id).isEqualTo("140");
-
-        String name = documentContext.read("$.name");
-        assertThat(name).isEqualTo("Chris Wool");
-
-        String dateOfBirth = documentContext.read("$.dateOfBirth");
-        assertThat(dateOfBirth).isEqualTo("1985-03-15");
-
-        Boolean isCitizen = documentContext.read("$.isCitizen");
-        assertThat(isCitizen).isEqualTo(true);
-
-        String registrationDate = documentContext.read("$.registrationDate");
-        assertThat(registrationDate).isEqualTo("2023-11-15");
-
-        String withdrawalDate = documentContext.read("$.withdrawalDate");
-        assertThat(withdrawalDate).isEqualTo(null);
-
-        Boolean lostThisElection = documentContext.read("$.lostThisElection");
-        assertThat(lostThisElection).isEqualTo(false);
+        String expectedJson = testUtils.fileToString("candidate1.json");
+        JSONAssert.assertEquals(expectedJson, patchResponse.getBody(), true);
     }
 
     @Test
