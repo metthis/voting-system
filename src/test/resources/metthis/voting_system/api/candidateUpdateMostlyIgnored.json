@@ -1,0 +1,9 @@
+{
+    "name": "newName",
+    "id": "newId",
+    "dateOfBirth": "1800-01-01",
+    "isCitizen": false,
+    "registrationDate": "2020-01-01",
+    "withdrawalDate": "2023-12-30",
+    "lostThisElection": true
+}

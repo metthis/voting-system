@@ -1,0 +1,8 @@
+{
+    "name": "Tiina Glass",
+    "dateOfBirth": "1990-01-01",
+    "isCitizen": true,
+    "registrationDate": "2023-12-01",
+    "withdrawalDate": "2023-12-15",
+    "lostThisElection": true
+}
