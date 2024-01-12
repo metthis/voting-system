@@ -204,7 +204,7 @@ public class CandidateControllerTests {
 
     @Test
     void patchIgnoresFieldsWhichDoNotCorrespondToCandidateFields() throws Exception {
-        String updateJson = testUtils.fileToString("candidateUpdateInvalid.json");
+        String updateJson = testUtils.fileToString("genericUpdateInvalid.json");
         String expectedJson = testUtils.fileToString("candidate1.json");
 
         mockMvc.perform(patch("/candidates/{id}", "140")
@@ -222,7 +222,7 @@ public class CandidateControllerTests {
 
     @Test
     void patchResponds404WhenAttemptingToUpdateANonexistentCandidate() throws Exception {
-        String updateJson = testUtils.fileToString("candidateUpdateInvalid.json");
+        String updateJson = testUtils.fileToString("candidateUpdate.json");
 
         mockMvc.perform(patch("/candidates/{id}", "9999")
                                 .header("Content-Type", "application/json")

@@ -1,0 +1,7 @@
+{
+    "name": "newName",
+    "id": "newId",
+    "dateOfBirth": "1800-01-01",
+    "isCitizen": false,
+    "lastVotedRound": 2
+}

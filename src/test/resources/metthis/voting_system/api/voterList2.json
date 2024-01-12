@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Chris Wool",
+        "id": "140",
+        "dateOfBirth": "1985-03-15",
+        "isCitizen": true,
+        "lastVotedRound": 0
+    },
+    {
+        "name": "Mary Given",
+        "id": "abc789",
+        "dateOfBirth": "1991-09-09",
+        "isCitizen": false,
+        "lastVotedRound": 1
+    },
+    {
+        "name": "Elizabeth Wong",
+        "id": "anID",
+        "dateOfBirth": "2001-11-30",
+        "isCitizen": true,
+        "lastVotedRound": 3
+    }
+]

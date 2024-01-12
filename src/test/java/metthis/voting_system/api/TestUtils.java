@@ -21,6 +21,7 @@ public class TestUtils {
 
 
     // Following overloads differ only by the type of newValue, Object can't be used as a type
+    // because ObjectNode.put doesn't accept Object, only different types
     String modifyJsonField(String json, String field, String newValue)
             throws JsonProcessingException {
         JsonNode jsonNode = objectMapper.readTree(json);
@@ -29,6 +30,13 @@ public class TestUtils {
     }
 
     String modifyJsonField(String json, String field, Boolean newValue)
+            throws JsonProcessingException {
+        JsonNode jsonNode = objectMapper.readTree(json);
+        ((ObjectNode) jsonNode).put(field, newValue);
+        return objectMapper.writeValueAsString(jsonNode);
+    }
+
+    String modifyJsonField(String json, String field, Integer newValue)
             throws JsonProcessingException {
         JsonNode jsonNode = objectMapper.readTree(json);
         ((ObjectNode) jsonNode).put(field, newValue);
