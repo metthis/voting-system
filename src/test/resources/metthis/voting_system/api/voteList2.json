@@ -1,0 +1,28 @@
+[
+    {
+        "type": "SingleCandidateSingleChoiceVote",
+        "votingRound": 1,
+        "choice": null
+    },
+    {
+        "type": "SingleCandidateSingleChoiceVote",
+        "votingRound": 2,
+        "choice": {
+            "id": "140"
+        }
+    },
+    {
+        "type": "SingleCandidateSingleChoiceVote",
+        "votingRound": 3,
+        "choice": {
+            "id": "100"
+        }
+    },
+    {
+        "type": "SingleCandidateSingleChoiceVote",
+        "votingRound": 3,
+        "choice": {
+            "id": "140"
+        }
+    }
+]

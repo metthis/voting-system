@@ -1,0 +1,7 @@
+{
+    "type": "SingleCandidateSingleChoiceVote",
+    "votingRound": 1,
+    "choice": {
+        "id": "unsavedId"
+    }
+}
