@@ -61,7 +61,7 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     }
 
     @Test
-    void voteIsDesirializedCorrectly() throws IOException {
+    void voteIsDeserializedCorrectly() throws IOException {
         byte[] actualBytes = testUtils
                 .fileToBytes("singleCandidateSingleChoiceVote.json");
         assertThat(json.parse(actualBytes))
@@ -76,7 +76,7 @@ public class SingleCandidateSingleChoiceVoteJsonTests {
     }
 
     @Test
-    void voteListIsDesirializedCorrectly() throws IOException {
+    void voteListIsDeserializedCorrectly() throws IOException {
         byte[] actualBytes = testUtils
                 .fileToBytes("singleCandidateSingleChoiceVoteList.json");
         assertThat(jsonList.parse(actualBytes))
