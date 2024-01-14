@@ -1,11 +1,13 @@
 [
     {
+        "type": "SingleCandidateSingleChoiceVote",
         "votingRound": 1,
         "choice": {
             "id": "123789"
         }
     },
     {
+        "type": "SingleCandidateSingleChoiceVote",
         "votingRound": 3,
         "choice": null
     }

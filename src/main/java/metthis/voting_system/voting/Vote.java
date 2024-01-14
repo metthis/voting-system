@@ -2,6 +2,9 @@ package metthis.voting_system.voting;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import metthis.voting_system.persons.Candidate;
@@ -12,6 +15,10 @@ import java.util.UUID;
 // It needs to be done this way because Spring Data repositories
 // don't support interfaces as "entities".
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @Type(value = SingleCandidateSingleChoiceVote.class)
+})
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Vote {
