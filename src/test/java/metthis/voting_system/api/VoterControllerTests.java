@@ -222,4 +222,17 @@ public class VoterControllerTests {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
                 .andExpect(content().string("Could not find voter 9999"));
     }
+
+    @Test
+    void deleteResponds204WhenRootIsCalledAndCallingGetOnRootReturnsAnEmptyArray() throws Exception {
+        String expectedJson = testUtils.fileToString("emptyArray.json");
+
+        mockMvc.perform(delete("/voters"))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/voters"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expectedJson, true));
+    }
 }

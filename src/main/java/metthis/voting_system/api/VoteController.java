@@ -58,4 +58,10 @@ public class VoteController {
 
         return ResponseEntity.created(locationOfNewVote).body(savedVote);
     }
+
+    @DeleteMapping()
+    private ResponseEntity<?> deleteAll() {
+        voteRepository.deleteAll();
+        return ResponseEntity.noContent().build();
+    }
 }

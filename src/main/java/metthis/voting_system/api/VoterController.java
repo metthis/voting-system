@@ -86,4 +86,10 @@ public class VoterController {
         Voter savedVoter = voterRepository.save(voter);
         return ResponseEntity.ok(savedVoter);
     }
+
+    @DeleteMapping()
+    private ResponseEntity<?> deleteAll() {
+        voterRepository.deleteAll();
+        return ResponseEntity.noContent().build();
+    }
 }

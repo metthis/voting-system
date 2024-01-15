@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.net.URI;
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -173,5 +174,18 @@ public class VoteControllerTests {
                                 .header("Content-Type", "application/json")
                                 .content(invalidVote))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void deleteResponds204WhenRootIsCalledAndCallingGetOnRootReturnsAnEmptyArray() throws Exception {
+        String expectedJson = testUtils.fileToString("emptyArray.json");
+
+        mockMvc.perform(delete("/votes"))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/votes"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expectedJson, true));
     }
 }

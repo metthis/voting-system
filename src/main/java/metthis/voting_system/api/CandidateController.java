@@ -91,4 +91,10 @@ public class CandidateController {
         Candidate savedCandidate = candidateRepository.save(candidate);
         return ResponseEntity.ok(savedCandidate);
     }
+
+    @DeleteMapping()
+    private ResponseEntity<?> deleteAll() {
+        candidateRepository.deleteAll();
+        return ResponseEntity.noContent().build();
+    }
 }
