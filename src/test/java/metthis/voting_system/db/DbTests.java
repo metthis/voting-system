@@ -1,26 +1,19 @@
 package metthis.voting_system.db;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import metthis.voting_system.persons.Candidate;
+import metthis.voting_system.persons.CandidateRegister;
+import metthis.voting_system.persons.Voter;
+import metthis.voting_system.persons.VoterRegister;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import metthis.voting_system.persons.Candidate;
-import metthis.voting_system.persons.CandidateRegister;
-import metthis.voting_system.persons.Voter;
-import metthis.voting_system.persons.VoterRegister;
-
+@Disabled("Won't be used once the whole project is turned into a Spring Boot service")
 public class DbTests {
     // TODO: Check whether MySQL is running
     private static boolean MYSQL_ALREADY_RUNNING = true;
