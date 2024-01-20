@@ -2,7 +2,6 @@ package metthis.voting_system.voting;
 
 import metthis.voting_system.persons.Candidate;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +18,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled("Won't be used once the whole project is turned into a Spring Boot service")
 public class BallotBoxTests {
     @Nested
     class New {

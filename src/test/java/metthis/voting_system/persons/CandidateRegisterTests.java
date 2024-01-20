@@ -1,7 +1,6 @@
 package metthis.voting_system.persons;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Won't be used once the whole project is turned into a Spring Boot service")
 public class CandidateRegisterTests {
     private CandidateRegister candidateRegister;
 

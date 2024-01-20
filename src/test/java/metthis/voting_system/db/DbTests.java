@@ -13,7 +13,6 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Won't be used once the whole project is turned into a Spring Boot service")
 public class DbTests {
     // TODO: Check whether MySQL is running
     private static boolean MYSQL_ALREADY_RUNNING = true;

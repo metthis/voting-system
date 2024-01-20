@@ -5,13 +5,11 @@ import metthis.voting_system.elections.PresidentialElection;
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.Voter;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Won't be used once the whole project is turned into a Spring Boot service")
 public class VotingInterfaceTests {
     private Voter defaultVoter;
 

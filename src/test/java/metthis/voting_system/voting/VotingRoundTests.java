@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Disabled("Won't be used once the whole project is turned into a Spring Boot service")
 public class VotingRoundTests {
     @Nested
     class New {
