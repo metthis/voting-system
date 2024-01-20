@@ -1,14 +1,14 @@
 package metthis.voting_system.elections;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import metthis.voting_system.persons.Candidate;
 import metthis.voting_system.persons.CandidateRegister;
 import metthis.voting_system.persons.VoterRegister;
 import metthis.voting_system.voting.Vote;
 import metthis.voting_system.voting.VotingRound;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractElection implements Election {
     protected final LocalDate ELECTION_DATE;
